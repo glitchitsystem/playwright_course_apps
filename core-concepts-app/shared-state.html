@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared State Demo - Playwright Test App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Shared State Demonstration</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context-a.html">Context A</a></li>
+          <li><a href="context-b.html">Context B</a></li>
+          <li>
+            <a href="shared-state.html" class="active">Shared State Demo</a>
+          </li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="shared-state-container">
+        <h2>Understanding Shared State Issues</h2>
+        <p class="warning">
+          This page demonstrates how shared state can break test independence.
+          Use this to practice identifying and avoiding such issues.
+        </p>
+
+        <div class="demo-sections">
+          <div class="demo-section">
+            <h3>🌍 Global Counter (Problematic)</h3>
+            <p>
+              This counter persists across page reloads and affects all tests:
+            </p>
+            <div class="counter-display">
+              <span
+                >Global Counter:
+                <span id="global-counter" data-testid="global-counter"
+                  >0</span
+                ></span
+              >
+              <button
+                id="increment-global"
+                data-testid="increment-global"
+                class="btn"
+              >
+                +1
+              </button>
+              <button
+                id="increment-global-5"
+                data-testid="increment-global-5"
+                class="btn"
+              >
+                +5
+              </button>
+              <button
+                id="reset-global"
+                data-testid="reset-global"
+                class="btn btn-secondary"
+              >
+                Reset
+              </button>
+            </div>
+            <p class="issue">
+              ⚠️ Issue: Tests depending on this counter will fail if run in
+              different orders.
+            </p>
+          </div>
+
+          <div class="demo-section">
+            <h3>📝 Shared Form Data (Problematic)</h3>
+            <p>Form data that persists between sessions:</p>
+            <form id="persistent-form" data-testid="persistent-form">
+              <div class="form-group">
+                <label for="persistent-name">Name:</label>
+                <input
+                  type="text"
+                  id="persistent-name"
+                  data-testid="persistent-name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="persistent-role">Role:</label>
+                <select id="persistent-role" data-testid="persistent-role">
+                  <option value="">Select Role</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                  <option value="guest">Guest</option>
+                </select>
+              </div>
+              <button
+                type="button"
+                id="save-persistent"
+                data-testid="save-persistent"
+                class="btn btn-primary"
+              >
+                Save Data
+              </button>
+              <button
+                type="button"
+                id="clear-persistent"
+                data-testid="clear-persistent"
+                class="btn btn-secondary"
+              >
+                Clear Data
+              </button>
+            </form>
+            <div
+              id="persistent-status"
+              data-testid="persistent-status"
+              class="status-display"
+            ></div>
+            <p class="issue">
+              ⚠️ Issue: Tests expecting empty forms will fail if previous tests
+              left data.
+            </p>
+          </div>
+
+          <div class="demo-section">
+            <h3>🔐 Authentication State (Problematic)</h3>
+            <p>Login state that persists across sessions:</p>
+            <div class="auth-container">
+              <div id="login-section" data-testid="login-section">
+                <div class="form-group">
+                  <label for="username">Username:</label>
+                  <input
+                    type="text"
+                    id="username"
+                    data-testid="username"
+                    value="testuser"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password">Password:</label>
+                  <input
+                    type="password"
+                    id="password"
+                    data-testid="password"
+                    value="password123"
+                  />
+                </div>
+                <button
+                  id="login-btn"
+                  data-testid="login-btn"
+                  class="btn btn-primary"
+                >
+                  Login
+                </button>
+              </div>
+
+              <div
+                id="logged-in-section"
+                data-testid="logged-in-section"
+                style="display: none"
+              >
+                <p>
+                  Welcome back,
+                  <span id="logged-in-user" data-testid="logged-in-user"></span
+                  >!
+                </p>
+                <button
+                  id="logout-btn"
+                  data-testid="logout-btn"
+                  class="btn btn-secondary"
+                >
+                  Logout
+                </button>
+              </div>
+
+              <div class="auth-status">
+                <p>
+                  Auth Status:
+                  <span id="auth-status" data-testid="auth-status"
+                    >Not Logged In</span
+                  >
+                </p>
+                <p>
+                  Session Time:
+                  <span id="session-time" data-testid="session-time">N/A</span>
+                </p>
+              </div>
+            </div>
+            <p class="issue">
+              ⚠️ Issue: Tests expecting logged-out state will fail if previous
+              tests logged in.
+            </p>
+          </div>
+
+          <div class="demo-section good-practice">
+            <h3>✅ Isolated Counter (Good Practice)</h3>
+            <p>This counter resets on each page load:</p>
+            <div class="counter-display">
+              <span
+                >Session Counter:
+                <span id="session-counter" data-testid="session-counter"
+                  >0</span
+                ></span
+              >
+              <button
+                id="increment-session"
+                data-testid="increment-session"
+                class="btn"
+              >
+                +1
+              </button>
+              <button
+                id="increment-session-5"
+                data-testid="increment-session-5"
+                class="btn"
+              >
+                +5
+              </button>
+              <button
+                id="reset-session"
+                data-testid="reset-session"
+                class="btn btn-secondary"
+              >
+                Reset
+              </button>
+            </div>
+            <p class="good">
+              ✅ Good: This counter starts fresh for every test run.
+            </p>
+          </div>
+        </div>
+
+        <div class="testing-scenarios">
+          <h3>🧪 Testing Scenarios</h3>
+          <div class="scenario-list">
+            <div class="scenario-item">
+              <h4>Scenario 1: Test the Global Counter</h4>
+              <p>
+                Write tests that expect the counter to start at 0. Run them
+                multiple times to see how shared state breaks them.
+              </p>
+              <button
+                id="test-global-scenario"
+                data-testid="test-global-scenario"
+                class="btn btn-outline"
+              >
+                Run Test Simulation
+              </button>
+              <div
+                id="global-test-result"
+                data-testid="global-test-result"
+                class="test-result"
+              ></div>
+            </div>
+
+            <div class="scenario-item">
+              <h4>Scenario 2: Test Form Persistence</h4>
+              <p>
+                Write tests that expect empty forms. See how previous data
+                affects new tests.
+              </p>
+              <button
+                id="test-form-scenario"
+                data-testid="test-form-scenario"
+                class="btn btn-outline"
+              >
+                Run Test Simulation
+              </button>
+              <div
+                id="form-test-result"
+                data-testid="form-test-result"
+                class="test-result"
+              ></div>
+            </div>
+
+            <div class="scenario-item">
+              <h4>Scenario 3: Test Authentication</h4>
+              <p>
+                Write tests that expect logged-out state. See how persistent
+                auth breaks assumptions.
+              </p>
+              <button
+                id="test-auth-scenario"
+                data-testid="test-auth-scenario"
+                class="btn btn-outline"
+              >
+                Run Test Simulation
+              </button>
+              <div
+                id="auth-test-result"
+                data-testid="auth-test-result"
+                class="test-result"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="best-practices">
+          <h3>💡 Best Practices for Test Independence</h3>
+          <ul>
+            <li>Always reset state before each test</li>
+            <li>
+              Don't rely on localStorage or sessionStorage from previous tests
+            </li>
+            <li>Clear cookies and authentication before each test</li>
+            <li>Use fresh browser contexts for complete isolation</li>
+            <li>Reset databases or use test-specific data</li>
+            <li>Avoid global variables that persist between tests</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      let sessionCounter = 0;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeSharedStateDemo();
+      });
+
+      function initializeSharedStateDemo() {
+        // Load persistent global counter
+        const globalCounter = parseInt(
+          localStorage.getItem("global-counter") || "0"
+        );
+        document.getElementById("global-counter").textContent = globalCounter;
+
+        // Global counter controls
+        document
+          .getElementById("increment-global")
+          .addEventListener("click", () => {
+            const current = parseInt(
+              localStorage.getItem("global-counter") || "0"
+            );
+            const newValue = current + 1;
+            localStorage.setItem("global-counter", newValue.toString());
+            document.getElementById("global-counter").textContent = newValue;
+          });
+
+        document
+          .getElementById("increment-global-5")
+          .addEventListener("click", () => {
+            const current = parseInt(
+              localStorage.getItem("global-counter") || "0"
+            );
+            const newValue = current + 5;
+            localStorage.setItem("global-counter", newValue.toString());
+            document.getElementById("global-counter").textContent = newValue;
+          });
+
+        document
+          .getElementById("reset-global")
+          .addEventListener("click", () => {
+            localStorage.setItem("global-counter", "0");
+            document.getElementById("global-counter").textContent = "0";
+          });
+
+        // Session counter (good practice)
+        document.getElementById("session-counter").textContent = sessionCounter;
+
+        document
+          .getElementById("increment-session")
+          .addEventListener("click", () => {
+            sessionCounter++;
+            document.getElementById("session-counter").textContent =
+              sessionCounter;
+          });
+
+        document
+          .getElementById("increment-session-5")
+          .addEventListener("click", () => {
+            sessionCounter += 5;
+            document.getElementById("session-counter").textContent =
+              sessionCounter;
+          });
+
+        document
+          .getElementById("reset-session")
+          .addEventListener("click", () => {
+            sessionCounter = 0;
+            document.getElementById("session-counter").textContent =
+              sessionCounter;
+          });
+
+        // Persistent form
+        loadPersistentForm();
+
+        document
+          .getElementById("save-persistent")
+          .addEventListener("click", savePersistentForm);
+        document
+          .getElementById("clear-persistent")
+          .addEventListener("click", clearPersistentForm);
+
+        // Authentication
+        loadAuthState();
+
+        document
+          .getElementById("login-btn")
+          .addEventListener("click", performLogin);
+        document
+          .getElementById("logout-btn")
+          .addEventListener("click", performLogout);
+
+        // Test scenarios
+        document
+          .getElementById("test-global-scenario")
+          .addEventListener("click", testGlobalScenario);
+        document
+          .getElementById("test-form-scenario")
+          .addEventListener("click", testFormScenario);
+        document
+          .getElementById("test-auth-scenario")
+          .addEventListener("click", testAuthScenario);
+      }
+
+      function loadPersistentForm() {
+        const name = localStorage.getItem("persistent-name") || "";
+        const role = localStorage.getItem("persistent-role") || "";
+
+        document.getElementById("persistent-name").value = name;
+        document.getElementById("persistent-role").value = role;
+
+        if (name || role) {
+          document.getElementById("persistent-status").innerHTML =
+            '<div class="warning">⚠️ Form has persistent data from previous session</div>';
+        }
+      }
+
+      function savePersistentForm() {
+        const name = document.getElementById("persistent-name").value;
+        const role = document.getElementById("persistent-role").value;
+
+        localStorage.setItem("persistent-name", name);
+        localStorage.setItem("persistent-role", role);
+
+        document.getElementById("persistent-status").innerHTML =
+          '<div class="success">✅ Data saved to localStorage</div>';
+      }
+
+      function clearPersistentForm() {
+        localStorage.removeItem("persistent-name");
+        localStorage.removeItem("persistent-role");
+        document.getElementById("persistent-name").value = "";
+        document.getElementById("persistent-role").value = "";
+        document.getElementById("persistent-status").innerHTML =
+          '<div class="info">ℹ️ Form data cleared</div>';
+      }
+
+      function loadAuthState() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const username = localStorage.getItem("logged-in-username") || "";
+        const loginTime = localStorage.getItem("login-time") || "";
+
+        if (isLoggedIn && username) {
+          showLoggedInState(username, loginTime);
+        } else {
+          showLoggedOutState();
+        }
+      }
+
+      function performLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username && password) {
+          const loginTime = new Date().toLocaleString();
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("logged-in-username", username);
+          localStorage.setItem("login-time", loginTime);
+
+          showLoggedInState(username, loginTime);
+        }
+      }
+
+      function performLogout() {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("logged-in-username");
+        localStorage.removeItem("login-time");
+
+        showLoggedOutState();
+      }
+
+      function showLoggedInState(username, loginTime) {
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("logged-in-section").style.display = "block";
+        document.getElementById("logged-in-user").textContent = username;
+        document.getElementById("auth-status").textContent = "Logged In";
+        document.getElementById("session-time").textContent = loginTime;
+      }
+
+      function showLoggedOutState() {
+        document.getElementById("login-section").style.display = "block";
+        document.getElementById("logged-in-section").style.display = "none";
+        document.getElementById("auth-status").textContent = "Not Logged In";
+        document.getElementById("session-time").textContent = "N/A";
+      }
+
+      // Test scenario simulations
+      function testGlobalScenario() {
+        const currentValue = parseInt(
+          localStorage.getItem("global-counter") || "0"
+        );
+        const result = document.getElementById("global-test-result");
+
+        if (currentValue === 0) {
+          result.innerHTML =
+            '<div class="success">✅ Test PASSED: Counter starts at 0</div>';
+        } else {
+          result.innerHTML = `<div class="error">❌ Test FAILED: Expected 0, but counter is ${currentValue}</div>`;
+        }
+      }
+
+      function testFormScenario() {
+        const name = localStorage.getItem("persistent-name") || "";
+        const role = localStorage.getItem("persistent-role") || "";
+        const result = document.getElementById("form-test-result");
+
+        if (!name && !role) {
+          result.innerHTML =
+            '<div class="success">✅ Test PASSED: Form is empty</div>';
+        } else {
+          result.innerHTML = `<div class="error">❌ Test FAILED: Expected empty form, but found data: name="${name}", role="${role}"</div>`;
+        }
+      }
+
+      function testAuthScenario() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const result = document.getElementById("auth-test-result");
+
+        if (!isLoggedIn) {
+          result.innerHTML =
+            '<div class="success">✅ Test PASSED: User is logged out</div>';
+        } else {
+          const username = localStorage.getItem("logged-in-username");
+          result.innerHTML = `<div class="error">❌ Test FAILED: Expected logged out, but user "${username}" is logged in</div>`;
+        }
+      }
+    </script>
+  </body>
+</html>

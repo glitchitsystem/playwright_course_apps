@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playwright Core Concepts - Test App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Playwright Core Concepts Test Application</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="context-a.html">Context A</a></li>
+          <li><a href="context-b.html">Context B</a></li>
+          <li><a href="shared-state.html">Shared State Demo</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="welcome">
+        <h2>Welcome to the Core Concepts Practice App</h2>
+        <p>
+          This application is designed to help you practice Playwright core
+          concepts:
+        </p>
+
+        <div class="concept-cards">
+          <div class="card">
+            <h3>Browser & Context</h3>
+            <p>
+              Practice working with different browser contexts and understanding
+              isolation.
+            </p>
+            <a href="context-a.html" class="btn">Explore Context A</a>
+            <a href="context-b.html" class="btn">Explore Context B</a>
+          </div>
+
+          <div class="card">
+            <h3>Test Independence</h3>
+            <p>
+              Learn how to keep tests independent and avoid shared state issues.
+            </p>
+            <a href="isolation-test.html" class="btn">Test Isolation</a>
+          </div>
+
+          <div class="card">
+            <h3>State Management</h3>
+            <p>
+              Understand how state can affect test reliability and independence.
+            </p>
+            <a href="shared-state.html" class="btn">Shared State Demo</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="instructions">
+        <h3>Testing Instructions</h3>
+        <div class="instruction-list">
+          <div class="instruction">
+            <h4>🎯 Practice Browser Contexts</h4>
+            <p>
+              Navigate between Context A and Context B pages. Notice how each
+              maintains separate state and cookies.
+            </p>
+          </div>
+          <div class="instruction">
+            <h4>🔒 Test Isolation</h4>
+            <p>
+              Use the Isolation Test page to practice creating independent tests
+              that don't affect each other.
+            </p>
+          </div>
+          <div class="instruction">
+            <h4>📊 State Independence</h4>
+            <p>
+              Experiment with the Shared State Demo to understand how shared
+              state can break test independence.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Playwright Course - Core Concepts Practice App</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

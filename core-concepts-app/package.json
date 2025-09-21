@@ -1,0 +1,25 @@
+{
+  "name": "playwright-core-concepts-app",
+  "version": "1.0.0",
+  "description": "A practice application for learning Playwright core concepts like browser contexts, test isolation, and fixtures",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "browser-contexts",
+    "test-isolation"
+  ],
+  "author": "Playwright Course",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "open": "^8.4.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

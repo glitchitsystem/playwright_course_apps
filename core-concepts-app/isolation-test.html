@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Isolation - Playwright Test App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Test Isolation Practice Page</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context-a.html">Context A</a></li>
+          <li><a href="context-b.html">Context B</a></li>
+          <li><a href="shared-state.html">Shared State Demo</a></li>
+          <li>
+            <a href="isolation-test.html" class="active">Isolation Test</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="isolation-container">
+        <h2>Test Isolation Scenarios</h2>
+        <p class="info">
+          This page contains various scenarios for practicing test isolation.
+          Each test should be independent.
+        </p>
+
+        <div class="test-scenarios">
+          <div class="scenario" id="scenario-1">
+            <h3>Scenario 1: Form Submission</h3>
+            <form id="test-form-1" data-testid="test-form-1">
+              <div class="form-group">
+                <label for="name-1">Name:</label>
+                <input
+                  type="text"
+                  id="name-1"
+                  data-testid="name-input"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email-1">Email:</label>
+                <input
+                  type="email"
+                  id="email-1"
+                  data-testid="email-input"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                data-testid="submit-button"
+                class="btn btn-primary"
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                id="clear-1"
+                data-testid="clear-button"
+                class="btn btn-secondary"
+              >
+                Clear
+              </button>
+            </form>
+            <div
+              id="result-1"
+              data-testid="form-result"
+              class="result-display"
+            ></div>
+          </div>
+
+          <div class="scenario" id="scenario-2">
+            <h3>Scenario 2: Todo List</h3>
+            <div class="todo-container">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="todo-input"
+                  data-testid="todo-input"
+                  placeholder="Enter a todo item"
+                />
+                <button id="add-todo" data-testid="add-todo" class="btn">
+                  Add Todo
+                </button>
+              </div>
+              <ul id="todo-list" data-testid="todo-list"></ul>
+              <div class="todo-stats">
+                <span
+                  >Total:
+                  <span id="todo-count" data-testid="todo-count">0</span></span
+                >
+                <button
+                  id="clear-todos"
+                  data-testid="clear-todos"
+                  class="btn btn-secondary"
+                >
+                  Clear All
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="scenario" id="scenario-3">
+            <h3>Scenario 3: Toggle States</h3>
+            <div class="toggle-container">
+              <div class="toggle-group">
+                <label>
+                  <input type="checkbox" id="toggle-1" data-testid="toggle-1" />
+                  Feature A
+                </label>
+                <div
+                  id="feature-a"
+                  data-testid="feature-a"
+                  class="feature-content"
+                  style="display: none"
+                >
+                  <p>Feature A is now enabled!</p>
+                  <button data-testid="feature-a-action" class="btn btn-small">
+                    Action A
+                  </button>
+                </div>
+              </div>
+
+              <div class="toggle-group">
+                <label>
+                  <input type="checkbox" id="toggle-2" data-testid="toggle-2" />
+                  Feature B
+                </label>
+                <div
+                  id="feature-b"
+                  data-testid="feature-b"
+                  class="feature-content"
+                  style="display: none"
+                >
+                  <p>Feature B is now enabled!</p>
+                  <button data-testid="feature-b-action" class="btn btn-small">
+                    Action B
+                  </button>
+                </div>
+              </div>
+
+              <div class="state-display">
+                <p>
+                  Active Features:
+                  <span id="active-features" data-testid="active-features"
+                    >None</span
+                  >
+                </p>
+              </div>
+
+              <button
+                id="reset-toggles"
+                data-testid="reset-toggles"
+                class="btn btn-secondary"
+              >
+                Reset All Toggles
+              </button>
+            </div>
+          </div>
+
+          <div class="scenario" id="scenario-4">
+            <h3>Scenario 4: Data Table</h3>
+            <div class="table-container">
+              <div class="table-controls">
+                <button id="add-row" data-testid="add-row" class="btn">
+                  Add Row
+                </button>
+                <button
+                  id="sort-name"
+                  data-testid="sort-name"
+                  class="btn btn-outline"
+                >
+                  Sort by Name
+                </button>
+                <button
+                  id="sort-age"
+                  data-testid="sort-age"
+                  class="btn btn-outline"
+                >
+                  Sort by Age
+                </button>
+                <button
+                  id="clear-table"
+                  data-testid="clear-table"
+                  class="btn btn-secondary"
+                >
+                  Clear Table
+                </button>
+              </div>
+              <table id="data-table" data-testid="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body" data-testid="table-body">
+                  <!-- Rows will be added dynamically -->
+                </tbody>
+              </table>
+              <p>
+                Row Count: <span id="row-count" data-testid="row-count">0</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="isolation-tips">
+          <h3>🧪 Test Isolation Tips</h3>
+          <ul>
+            <li>Each test should start with a clean state</li>
+            <li>Tests should not depend on the order of execution</li>
+            <li>Use the reset/clear buttons to restore initial state</li>
+            <li>Avoid sharing data between test scenarios</li>
+            <li>Each scenario should be testable independently</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeIsolationTests();
+      });
+
+      function initializeIsolationTests() {
+        // Scenario 1: Form Submission
+        const form1 = document.getElementById("test-form-1");
+        form1.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const name = document.getElementById("name-1").value;
+          const email = document.getElementById("email-1").value;
+
+          document.getElementById("result-1").innerHTML = `
+                    <div class="success">Form submitted successfully!</div>
+                    <p>Name: ${name}</p>
+                    <p>Email: ${email}</p>
+                `;
+        });
+
+        document
+          .getElementById("clear-1")
+          .addEventListener("click", function () {
+            form1.reset();
+            document.getElementById("result-1").innerHTML = "";
+          });
+
+        // Scenario 2: Todo List
+        let todos = [];
+        let todoId = 1;
+
+        document.getElementById("add-todo").addEventListener("click", addTodo);
+        document
+          .getElementById("todo-input")
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter") addTodo();
+          });
+        document
+          .getElementById("clear-todos")
+          .addEventListener("click", clearTodos);
+
+        function addTodo() {
+          const input = document.getElementById("todo-input");
+          const text = input.value.trim();
+          if (!text) return;
+
+          const todo = { id: todoId++, text: text, completed: false };
+          todos.push(todo);
+          input.value = "";
+          renderTodos();
+        }
+
+        function renderTodos() {
+          const list = document.getElementById("todo-list");
+          list.innerHTML = todos
+            .map(
+              (todo) => `
+                    <li data-todo-id="${todo.id}" class="${
+                todo.completed ? "completed" : ""
+              }">
+                        <span>${todo.text}</span>
+                        <button onclick="toggleTodo(${
+                          todo.id
+                        })" class="btn btn-small">Toggle</button>
+                        <button onclick="deleteTodo(${
+                          todo.id
+                        })" class="btn btn-small btn-danger">Delete</button>
+                    </li>
+                `
+            )
+            .join("");
+
+          document.getElementById("todo-count").textContent = todos.length;
+        }
+
+        function clearTodos() {
+          todos = [];
+          todoId = 1;
+          renderTodos();
+        }
+
+        // Global functions for todo actions
+        window.toggleTodo = function (id) {
+          const todo = todos.find((t) => t.id === id);
+          if (todo) {
+            todo.completed = !todo.completed;
+            renderTodos();
+          }
+        };
+
+        window.deleteTodo = function (id) {
+          todos = todos.filter((t) => t.id !== id);
+          renderTodos();
+        };
+
+        // Scenario 3: Toggle States
+        document
+          .getElementById("toggle-1")
+          .addEventListener("change", function () {
+            toggleFeature("a", this.checked);
+            updateActiveFeatures();
+          });
+
+        document
+          .getElementById("toggle-2")
+          .addEventListener("change", function () {
+            toggleFeature("b", this.checked);
+            updateActiveFeatures();
+          });
+
+        document
+          .getElementById("reset-toggles")
+          .addEventListener("click", function () {
+            document.getElementById("toggle-1").checked = false;
+            document.getElementById("toggle-2").checked = false;
+            toggleFeature("a", false);
+            toggleFeature("b", false);
+            updateActiveFeatures();
+          });
+
+        function toggleFeature(feature, enabled) {
+          const element = document.getElementById(`feature-${feature}`);
+          element.style.display = enabled ? "block" : "none";
+        }
+
+        function updateActiveFeatures() {
+          const features = [];
+          if (document.getElementById("toggle-1").checked) features.push("A");
+          if (document.getElementById("toggle-2").checked) features.push("B");
+
+          document.getElementById("active-features").textContent =
+            features.length > 0 ? features.join(", ") : "None";
+        }
+
+        // Scenario 4: Data Table
+        let tableData = [];
+        let rowId = 1;
+
+        document
+          .getElementById("add-row")
+          .addEventListener("click", addTableRow);
+        document
+          .getElementById("sort-name")
+          .addEventListener("click", () => sortTable("name"));
+        document
+          .getElementById("sort-age")
+          .addEventListener("click", () => sortTable("age"));
+        document
+          .getElementById("clear-table")
+          .addEventListener("click", clearTable);
+
+        function addTableRow() {
+          const names = ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"];
+          const randomName = names[Math.floor(Math.random() * names.length)];
+          const randomAge = Math.floor(Math.random() * 40) + 20;
+
+          const row = { id: rowId++, name: randomName, age: randomAge };
+          tableData.push(row);
+          renderTable();
+        }
+
+        function sortTable(field) {
+          tableData.sort((a, b) => {
+            if (field === "name") return a.name.localeCompare(b.name);
+            if (field === "age") return a.age - b.age;
+            return 0;
+          });
+          renderTable();
+        }
+
+        function renderTable() {
+          const tbody = document.getElementById("table-body");
+          tbody.innerHTML = tableData
+            .map(
+              (row) => `
+                    <tr data-row-id="${row.id}">
+                        <td>${row.id}</td>
+                        <td>${row.name}</td>
+                        <td>${row.age}</td>
+                        <td>
+                            <button onclick="deleteRow(${row.id})" class="btn btn-small btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                `
+            )
+            .join("");
+
+          document.getElementById("row-count").textContent = tableData.length;
+        }
+
+        function clearTable() {
+          tableData = [];
+          rowId = 1;
+          renderTable();
+        }
+
+        // Global function for row deletion
+        window.deleteRow = function (id) {
+          tableData = tableData.filter((row) => row.id !== id);
+          renderTable();
+        };
+      }
+    </script>
+  </body>
+</html>

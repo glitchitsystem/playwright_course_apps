@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Context A - Playwright Test App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Context A - Browser Context Demo</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context-a.html" class="active">Context A</a></li>
+          <li><a href="context-b.html">Context B</a></li>
+          <li><a href="shared-state.html">Shared State Demo</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="context-container context-a">
+        <h2>Browser Context A</h2>
+        <p class="context-info">
+          This page represents a separate browser context. State here should be
+          isolated from Context B.
+        </p>
+
+        <div class="state-demo">
+          <h3>Local State Demo</h3>
+          <div class="form-group">
+            <label for="username-a">Username:</label>
+            <input
+              type="text"
+              id="username-a"
+              data-testid="username-input"
+              placeholder="Enter username for Context A"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="theme-a">Theme:</label>
+            <select id="theme-a" data-testid="theme-select">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="blue">Blue</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="checkbox"
+              id="remember-a"
+              data-testid="remember-checkbox"
+            />
+            <label for="remember-a">Remember my settings</label>
+          </div>
+
+          <button
+            id="save-context-a"
+            data-testid="save-button"
+            class="btn btn-primary"
+          >
+            Save Context A Settings
+          </button>
+        </div>
+
+        <div class="counter-demo">
+          <h3>Counter Demo</h3>
+          <p>
+            Counter Value:
+            <span id="counter-a" data-testid="counter-value">0</span>
+          </p>
+          <button id="increment-a" data-testid="increment-button" class="btn">
+            Increment
+          </button>
+          <button id="decrement-a" data-testid="decrement-button" class="btn">
+            Decrement
+          </button>
+          <button
+            id="reset-a"
+            data-testid="reset-button"
+            class="btn btn-secondary"
+          >
+            Reset
+          </button>
+        </div>
+
+        <div class="session-info">
+          <h3>Session Information</h3>
+          <p>Context ID: <span data-testid="context-id">CONTEXT_A</span></p>
+          <p>
+            Page Load Time:
+            <span id="load-time-a" data-testid="load-time"></span>
+          </p>
+          <p>
+            Session Storage:
+            <span id="session-storage-a" data-testid="session-storage"
+              >Empty</span
+            >
+          </p>
+        </div>
+
+        <div class="navigation-test">
+          <h3>Navigation Test</h3>
+          <p>
+            Use these links to test page navigation within the same context:
+          </p>
+          <a
+            href="context-b.html"
+            data-testid="navigate-context-b"
+            class="btn btn-outline"
+            >Go to Context B</a
+          >
+          <a
+            href="isolation-test.html"
+            data-testid="navigate-isolation"
+            class="btn btn-outline"
+            >Go to Isolation Test</a
+          >
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Context A specific JavaScript
+      document.addEventListener("DOMContentLoaded", function () {
+        const loadTime = new Date().toLocaleTimeString();
+        document.getElementById("load-time-a").textContent = loadTime;
+
+        // Load saved state from localStorage
+        loadContextState("A");
+
+        // Counter functionality
+        let counter = parseInt(localStorage.getItem("counter-a") || "0");
+        updateCounter(counter, "counter-a");
+
+        document.getElementById("increment-a").addEventListener("click", () => {
+          counter++;
+          updateCounter(counter, "counter-a");
+          localStorage.setItem("counter-a", counter.toString());
+        });
+
+        document.getElementById("decrement-a").addEventListener("click", () => {
+          counter--;
+          updateCounter(counter, "counter-a");
+          localStorage.setItem("counter-a", counter.toString());
+        });
+
+        document.getElementById("reset-a").addEventListener("click", () => {
+          counter = 0;
+          updateCounter(counter, "counter-a");
+          localStorage.setItem("counter-a", "0");
+        });
+
+        // Save context settings
+        document
+          .getElementById("save-context-a")
+          .addEventListener("click", () => {
+            saveContextState("A");
+            showNotification("Context A settings saved!");
+          });
+
+        // Update session storage display
+        updateSessionDisplay("A");
+      });
+
+      function updateCounter(value, elementId) {
+        document.getElementById(elementId).textContent = value;
+      }
+
+      function loadContextState(context) {
+        const username = localStorage.getItem(`username-${context}`);
+        const theme = localStorage.getItem(`theme-${context}`);
+        const remember = localStorage.getItem(`remember-${context}`) === "true";
+
+        if (username)
+          document.getElementById(`username-${context.toLowerCase()}`).value =
+            username;
+        if (theme)
+          document.getElementById(`theme-${context.toLowerCase()}`).value =
+            theme;
+        if (remember)
+          document.getElementById(`remember-${context.toLowerCase()}`).checked =
+            remember;
+      }
+
+      function saveContextState(context) {
+        const username = document.getElementById(
+          `username-${context.toLowerCase()}`
+        ).value;
+        const theme = document.getElementById(
+          `theme-${context.toLowerCase()}`
+        ).value;
+        const remember = document.getElementById(
+          `remember-${context.toLowerCase()}`
+        ).checked;
+
+        localStorage.setItem(`username-${context}`, username);
+        localStorage.setItem(`theme-${context}`, theme);
+        localStorage.setItem(`remember-${context}`, remember.toString());
+
+        sessionStorage.setItem(
+          `last-saved-${context}`,
+          new Date().toLocaleTimeString()
+        );
+        updateSessionDisplay(context);
+      }
+
+      function updateSessionDisplay(context) {
+        const lastSaved = sessionStorage.getItem(`last-saved-${context}`);
+        const display = lastSaved
+          ? `Last saved: ${lastSaved}`
+          : "No data saved";
+        document.getElementById(
+          `session-storage-${context.toLowerCase()}`
+        ).textContent = display;
+      }
+
+      function showNotification(message) {
+        const notification = document.createElement("div");
+        notification.className = "notification";
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
