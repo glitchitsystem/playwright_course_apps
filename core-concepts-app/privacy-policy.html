@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - Playwright Test App</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="component-styles.css" />
+    <link rel="stylesheet" href="ad-component.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Privacy Policy</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context.html">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="page-layout">
+        <div class="main-content">
+          <div class="privacy-container">
+            <h2>Privacy Policy for Playwright Core Concepts Test App</h2>
+            <p><strong>Last updated:</strong> January 2025</p>
+
+            <div class="policy-section">
+              <h3>1. Information We Collect</h3>
+              <p>
+                This is a demonstration application for testing purposes. We may
+                collect:
+              </p>
+              <ul>
+                <li>
+                  <strong>Local Storage Data:</strong> Form inputs, preferences,
+                  and demo data stored in your browser
+                </li>
+                <li>
+                  <strong>Cookies:</strong> Consent preferences and functional
+                  cookies for the application to work
+                </li>
+                <li>
+                  <strong>Usage Data:</strong> How you interact with the
+                  application for demonstration purposes
+                </li>
+              </ul>
+            </div>
+
+            <div class="policy-section">
+              <h3>2. How We Use Your Information</h3>
+              <p>The data collected is used solely for:</p>
+              <ul>
+                <li>
+                  Demonstrating browser state management and isolation concepts
+                </li>
+                <li>Testing cookie consent functionality</li>
+                <li>Educational purposes related to Playwright testing</li>
+                <li>Showing how persistent data affects test independence</li>
+              </ul>
+            </div>
+
+            <div class="policy-section">
+              <h3>3. Cookies and Local Storage</h3>
+              <div class="cookie-types">
+                <h4>Essential Cookies</h4>
+                <p>
+                  Required for the application to function properly. Cannot be
+                  disabled.
+                </p>
+
+                <h4>Advertising Cookies</h4>
+                <p>
+                  Used to display personalized advertisements. These require
+                  your explicit consent.
+                </p>
+
+                <h4>Analytics Cookies</h4>
+                <p>
+                  Help us understand how the application is used for educational
+                  improvements.
+                </p>
+              </div>
+            </div>
+
+            <div class="policy-section">
+              <h3>4. Your Rights (GDPR)</h3>
+              <p>
+                As this is a demonstration app, you have the following rights:
+              </p>
+              <ul>
+                <li>
+                  <strong>Right to Access:</strong> View what data we store
+                  (check your browser's localStorage)
+                </li>
+                <li>
+                  <strong>Right to Deletion:</strong> Clear your browser data or
+                  use the reset buttons
+                </li>
+                <li>
+                  <strong>Right to Withdraw Consent:</strong> Change cookie
+                  preferences at any time
+                </li>
+                <li>
+                  <strong>Right to Portability:</strong> Export your browser
+                  data if needed
+                </li>
+              </ul>
+            </div>
+
+            <div class="policy-section">
+              <h3>5. Data Security</h3>
+              <p>
+                All data is stored locally in your browser. We do not transmit
+                personal data to external servers. This application is designed
+                for educational testing purposes only.
+              </p>
+            </div>
+
+            <div class="policy-section">
+              <h3>6. Third-Party Services</h3>
+              <p>This application may include:</p>
+              <ul>
+                <li>
+                  <strong>Google AdSense:</strong> For demonstration of ad
+                  consent (demo ads only)
+                </li>
+                <li>
+                  <strong>Local Storage:</strong> For demonstrating data
+                  persistence issues in testing
+                </li>
+              </ul>
+            </div>
+
+            <div class="policy-section">
+              <h3>7. Contact Information</h3>
+              <p>
+                This is a demonstration application created for Playwright
+                testing education. For questions about real privacy policies,
+                please consult appropriate legal resources.
+              </p>
+            </div>
+
+            <div class="consent-management">
+              <h3>Manage Your Consent</h3>
+              <p>You can change your cookie preferences at any time:</p>
+              <div class="consent-buttons">
+                <button
+                  id="view-consent"
+                  class="btn btn-outline"
+                  data-testid="view-consent"
+                >
+                  View Current Preferences
+                </button>
+                <button
+                  id="change-consent"
+                  class="btn btn-primary"
+                  data-testid="change-consent"
+                >
+                  Change Cookie Preferences
+                </button>
+                <button
+                  id="clear-all-data"
+                  class="btn btn-secondary"
+                  data-testid="clear-all-data"
+                >
+                  Clear All Data
+                </button>
+              </div>
+              <div
+                id="consent-status"
+                class="consent-status"
+                data-testid="consent-status"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ad Component Sidebar -->
+        <aside class="ad-sidebar">
+          <div id="ad-container" class="ad-container">
+            <div id="ad-placeholder" class="ad-placeholder">
+              <p>🍪 Ads require cookie consent</p>
+              <button id="consent-ads" class="btn btn-small">Allow Ads</button>
+            </div>
+            <div
+              id="google-ad-slot"
+              class="google-ad-slot"
+              style="display: none"
+            >
+              <!-- Google Ad will load here -->
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none">
+      <div class="cookie-content">
+        <p>
+          We use cookies to personalize ads and analyze traffic.
+          <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+        </p>
+        <div class="cookie-buttons">
+          <button id="accept-cookies" class="btn btn-primary">
+            Accept All
+          </button>
+          <button id="reject-cookies" class="btn btn-secondary">Reject</button>
+          <button id="manage-cookies" class="btn btn-outline">Manage</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2025 Glitch IT System - Core Concepts Practice App |
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        initializePrivacyPage();
+      });
+
+      function initializePrivacyPage() {
+        // View current consent preferences
+        document
+          .getElementById("view-consent")
+          .addEventListener("click", () => {
+            showCurrentConsent();
+          });
+
+        // Change consent preferences (show banner)
+        document
+          .getElementById("change-consent")
+          .addEventListener("click", () => {
+            const banner = document.getElementById("cookie-banner");
+            if (banner) {
+              banner.style.display = "block";
+            }
+          });
+
+        // Clear all data
+        document
+          .getElementById("clear-all-data")
+          .addEventListener("click", () => {
+            if (
+              confirm(
+                "This will clear all stored data including preferences, form data, and authentication. Continue?"
+              )
+            ) {
+              clearAllApplicationData();
+              showConsentStatus(
+                "All application data cleared successfully.",
+                "success"
+              );
+            }
+          });
+      }
+
+      function showCurrentConsent() {
+        const consentData = localStorage.getItem("ad-consent");
+        const cookiesAccepted = localStorage.getItem("cookies-accepted");
+
+        let status = "Current Cookie Preferences:\n\n";
+        status += `• Essential Cookies: Always enabled\n`;
+        status += `• Advertising Cookies: ${
+          consentData === "true" ? "Enabled" : "Disabled"
+        }\n`;
+        status += `• Analytics Cookies: ${
+          cookiesAccepted === "true" ? "Enabled" : "Disabled"
+        }\n`;
+
+        showConsentStatus(status.replace(/\n/g, "<br>"), "info");
+      }
+
+      function clearAllApplicationData() {
+        // Clear all localStorage items used by the app
+        const keysToRemove = [
+          "ad-consent",
+          "cookies-accepted",
+          "global-counter",
+          "persistent-name",
+          "persistent-role",
+          "isLoggedIn",
+          "logged-in-username",
+          "login-time",
+          "username-A",
+          "theme-A",
+          "remember-A",
+          "counter-a",
+        ];
+
+        keysToRemove.forEach((key) => {
+          localStorage.removeItem(key);
+        });
+
+        // Clear sessionStorage
+        sessionStorage.clear();
+
+        // Reset ads display
+        const adPlaceholder = document.getElementById("ad-placeholder");
+        const googleAdSlot = document.getElementById("google-ad-slot");
+
+        if (adPlaceholder) adPlaceholder.style.display = "flex";
+        if (googleAdSlot) googleAdSlot.style.display = "none";
+
+        // Hide cookie banner
+        const banner = document.getElementById("cookie-banner");
+        if (banner) banner.style.display = "none";
+      }
+
+      function showConsentStatus(message, type = "info") {
+        const statusDiv = document.getElementById("consent-status");
+        if (!statusDiv) return;
+
+        const typeClass =
+          type === "success"
+            ? "success"
+            : type === "error"
+            ? "warning"
+            : "info";
+
+        statusDiv.innerHTML = `<div class="${typeClass}" style="margin-top: 15px; padding: 10px; border-radius: 4px;">
+          ${message}
+        </div>`;
+
+        // Clear after 5 seconds
+        setTimeout(() => {
+          statusDiv.innerHTML = "";
+        }, 5000);
+      }
+    </script>
+    <script src="ad-component.js"></script>
+  </body>
+</html>

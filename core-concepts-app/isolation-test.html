@@ -6,6 +6,7 @@
     <title>Test Isolation - Playwright Test App</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="component-styles.css" />
+    <link rel="stylesheet" href="ad-component.css" />
   </head>
   <body>
     <header>
@@ -23,208 +24,263 @@
     </header>
 
     <main>
-      <div class="isolation-container">
-        <h2>Test Isolation Scenarios</h2>
-        <p class="info">
-          This page contains various scenarios for practicing test isolation.
-          Each test should be independent.
-        </p>
+      <div class="page-layout">
+        <div class="main-content">
+          <div class="isolation-container">
+            <h2>Test Isolation Scenarios</h2>
+            <p class="info">
+              This page contains various scenarios for practicing test
+              isolation. Each test should be independent.
+            </p>
 
-        <div class="test-scenarios">
-          <div class="scenario" id="scenario-1">
-            <h3>Scenario 1: Form Submission</h3>
-            <form id="test-form-1" data-testid="test-form-1">
-              <div class="form-group">
-                <label for="name-1">Name:</label>
-                <input
-                  type="text"
-                  id="name-1"
-                  data-testid="name-input"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="email-1">Email:</label>
-                <input
-                  type="email"
-                  id="email-1"
-                  data-testid="email-input"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                data-testid="submit-button"
-                class="btn btn-primary"
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                id="clear-1"
-                data-testid="clear-button"
-                class="btn btn-secondary"
-              >
-                Clear
-              </button>
-            </form>
-            <div
-              id="result-1"
-              data-testid="form-result"
-              class="result-display"
-            ></div>
-          </div>
-
-          <div class="scenario" id="scenario-2">
-            <h3>Scenario 2: Todo List</h3>
-            <div class="todo-container">
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="todo-input"
-                  data-testid="todo-input"
-                  placeholder="Enter a todo item"
-                />
-                <button id="add-todo" data-testid="add-todo" class="btn">
-                  Add Todo
-                </button>
-              </div>
-              <ul id="todo-list" data-testid="todo-list"></ul>
-              <div class="todo-stats">
-                <span
-                  >Total:
-                  <span id="todo-count" data-testid="todo-count">0</span></span
-                >
-                <button
-                  id="clear-todos"
-                  data-testid="clear-todos"
-                  class="btn btn-secondary"
-                >
-                  Clear All
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="scenario" id="scenario-3">
-            <h3>Scenario 3: Toggle States</h3>
-            <div class="toggle-container">
-              <div class="toggle-group">
-                <label>
-                  <input type="checkbox" id="toggle-1" data-testid="toggle-1" />
-                  Feature A
-                </label>
-                <div
-                  id="feature-a"
-                  data-testid="feature-a"
-                  class="feature-content"
-                  style="display: none"
-                >
-                  <p>Feature A is now enabled!</p>
-                  <button data-testid="feature-a-action" class="btn btn-small">
-                    Action A
-                  </button>
-                </div>
-              </div>
-
-              <div class="toggle-group">
-                <label>
-                  <input type="checkbox" id="toggle-2" data-testid="toggle-2" />
-                  Feature B
-                </label>
-                <div
-                  id="feature-b"
-                  data-testid="feature-b"
-                  class="feature-content"
-                  style="display: none"
-                >
-                  <p>Feature B is now enabled!</p>
-                  <button data-testid="feature-b-action" class="btn btn-small">
-                    Action B
-                  </button>
-                </div>
-              </div>
-
-              <div class="state-display">
-                <p>
-                  Active Features:
-                  <span id="active-features" data-testid="active-features"
-                    >None</span
+            <div class="test-scenarios">
+              <div class="scenario" id="scenario-1">
+                <h3>Scenario 1: Form Submission</h3>
+                <form id="test-form-1" data-testid="test-form-1">
+                  <div class="form-group">
+                    <label for="name-1">Name:</label>
+                    <input
+                      type="text"
+                      id="name-1"
+                      data-testid="name-input"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="email-1">Email:</label>
+                    <input
+                      type="email"
+                      id="email-1"
+                      data-testid="email-input"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    data-testid="submit-button"
+                    class="btn btn-primary"
                   >
-                </p>
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    id="clear-1"
+                    data-testid="clear-button"
+                    class="btn btn-secondary"
+                  >
+                    Clear
+                  </button>
+                </form>
+                <div
+                  id="result-1"
+                  data-testid="form-result"
+                  class="result-display"
+                ></div>
               </div>
 
-              <button
-                id="reset-toggles"
-                data-testid="reset-toggles"
-                class="btn btn-secondary"
-              >
-                Reset All Toggles
-              </button>
+              <div class="scenario" id="scenario-2">
+                <h3>Scenario 2: Todo List</h3>
+                <div class="todo-container">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      id="todo-input"
+                      data-testid="todo-input"
+                      placeholder="Enter a todo item"
+                    />
+                    <button id="add-todo" data-testid="add-todo" class="btn">
+                      Add Todo
+                    </button>
+                  </div>
+                  <ul id="todo-list" data-testid="todo-list"></ul>
+                  <div class="todo-stats">
+                    <span
+                      >Total:
+                      <span id="todo-count" data-testid="todo-count"
+                        >0</span
+                      ></span
+                    >
+                    <button
+                      id="clear-todos"
+                      data-testid="clear-todos"
+                      class="btn btn-secondary"
+                    >
+                      Clear All
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="scenario" id="scenario-3">
+                <h3>Scenario 3: Toggle States</h3>
+                <div class="toggle-container">
+                  <div class="toggle-group">
+                    <label>
+                      <input
+                        type="checkbox"
+                        id="toggle-1"
+                        data-testid="toggle-1"
+                      />
+                      Feature A
+                    </label>
+                    <div
+                      id="feature-a"
+                      data-testid="feature-a"
+                      class="feature-content"
+                      style="display: none"
+                    >
+                      <p>Feature A is now enabled!</p>
+                      <button
+                        data-testid="feature-a-action"
+                        class="btn btn-small"
+                      >
+                        Action A
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="toggle-group">
+                    <label>
+                      <input
+                        type="checkbox"
+                        id="toggle-2"
+                        data-testid="toggle-2"
+                      />
+                      Feature B
+                    </label>
+                    <div
+                      id="feature-b"
+                      data-testid="feature-b"
+                      class="feature-content"
+                      style="display: none"
+                    >
+                      <p>Feature B is now enabled!</p>
+                      <button
+                        data-testid="feature-b-action"
+                        class="btn btn-small"
+                      >
+                        Action B
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="state-display">
+                    <p>
+                      Active Features:
+                      <span id="active-features" data-testid="active-features"
+                        >None</span
+                      >
+                    </p>
+                  </div>
+
+                  <button
+                    id="reset-toggles"
+                    data-testid="reset-toggles"
+                    class="btn btn-secondary"
+                  >
+                    Reset All Toggles
+                  </button>
+                </div>
+              </div>
+
+              <div class="scenario" id="scenario-4">
+                <h3>Scenario 4: Data Table</h3>
+                <div class="table-container">
+                  <div class="table-controls">
+                    <button id="add-row" data-testid="add-row" class="btn">
+                      Add Row
+                    </button>
+                    <button
+                      id="sort-name"
+                      data-testid="sort-name"
+                      class="btn btn-outline"
+                    >
+                      Sort by Name
+                    </button>
+                    <button
+                      id="sort-age"
+                      data-testid="sort-age"
+                      class="btn btn-outline"
+                    >
+                      Sort by Age
+                    </button>
+                    <button
+                      id="clear-table"
+                      data-testid="clear-table"
+                      class="btn btn-secondary"
+                    >
+                      Clear Table
+                    </button>
+                  </div>
+                  <table id="data-table" data-testid="data-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-body" data-testid="table-body">
+                      <!-- Rows will be added dynamically -->
+                    </tbody>
+                  </table>
+                  <p>
+                    Row Count:
+                    <span id="row-count" data-testid="row-count">0</span>
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="scenario" id="scenario-4">
-            <h3>Scenario 4: Data Table</h3>
-            <div class="table-container">
-              <div class="table-controls">
-                <button id="add-row" data-testid="add-row" class="btn">
-                  Add Row
-                </button>
-                <button
-                  id="sort-name"
-                  data-testid="sort-name"
-                  class="btn btn-outline"
-                >
-                  Sort by Name
-                </button>
-                <button
-                  id="sort-age"
-                  data-testid="sort-age"
-                  class="btn btn-outline"
-                >
-                  Sort by Age
-                </button>
-                <button
-                  id="clear-table"
-                  data-testid="clear-table"
-                  class="btn btn-secondary"
-                >
-                  Clear Table
-                </button>
-              </div>
-              <table id="data-table" data-testid="data-table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="table-body" data-testid="table-body">
-                  <!-- Rows will be added dynamically -->
-                </tbody>
-              </table>
-              <p>
-                Row Count: <span id="row-count" data-testid="row-count">0</span>
-              </p>
+            <div class="isolation-tips">
+              <h3>🧪 Test Isolation Tips</h3>
+              <ul>
+                <li>Each test should start with a clean state</li>
+                <li>Tests should not depend on the order of execution</li>
+                <li>Use the reset/clear buttons to restore initial state</li>
+                <li>Avoid sharing data between test scenarios</li>
+                <li>Each scenario should be testable independently</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div class="isolation-tips">
-          <h3>🧪 Test Isolation Tips</h3>
-          <ul>
-            <li>Each test should start with a clean state</li>
-            <li>Tests should not depend on the order of execution</li>
-            <li>Use the reset/clear buttons to restore initial state</li>
-            <li>Avoid sharing data between test scenarios</li>
-            <li>Each scenario should be testable independently</li>
-          </ul>
-        </div>
+        <!-- Ad Component Sidebar -->
+        <aside class="ad-sidebar">
+          <div id="ad-container" class="ad-container">
+            <div id="ad-placeholder" class="ad-placeholder">
+              <p>🍪 Ads require cookie consent</p>
+              <button id="consent-ads" class="btn btn-small">Allow Ads</button>
+            </div>
+            <div
+              id="google-ad-slot"
+              class="google-ad-slot"
+              style="display: none"
+            >
+              <!-- Google Ad will load here -->
+            </div>
+          </div>
+        </aside>
       </div>
     </main>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none">
+      <div class="cookie-content">
+        <p>
+          We use cookies to personalize ads and analyze traffic.
+          <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+        </p>
+        <div class="cookie-buttons">
+          <button id="accept-cookies" class="btn btn-primary">
+            Accept All
+          </button>
+          <button id="reject-cookies" class="btn btn-secondary">Reject</button>
+          <button id="manage-cookies" class="btn btn-outline">Manage</button>
+        </div>
+      </div>
+    </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -429,6 +485,6 @@
         };
       }
     </script>
+    <script src="ad-component.js"></script>
   </body>
-</html>
 </html>

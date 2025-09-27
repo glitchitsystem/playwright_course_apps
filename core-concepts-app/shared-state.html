@@ -6,6 +6,7 @@
     <title>Shared State Demo - Playwright Test App</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="component-styles.css" />
+    <link rel="stylesheet" href="ad-component.css" />
   </head>
   <body>
     <header>
@@ -23,222 +24,271 @@
     </header>
 
     <main>
-      <div class="shared-state-container">
-        <h2>Understanding Shared State Issues</h2>
-        <p class="warning">
-          This page demonstrates how shared state can break test independence.
-          Use this to practice identifying and avoiding such issues.
-        </p>
-
-        <div class="demo-sections">
-          <div class="demo-section">
-            <h3>🌍 Global Counter (Problematic)</h3>
-            <p>
-              This counter persists across page reloads and affects all tests:
+      <div class="page-layout">
+        <div class="main-content">
+          <div class="shared-state-container">
+            <h2>Understanding Shared State Issues</h2>
+            <p class="warning">
+              This page demonstrates how shared state can break test
+              independence. Use this to practice identifying and avoiding such
+              issues.
             </p>
-            <div class="counter-display">
-              <span
-                >Global Counter:
-                <span id="global-counter" data-testid="global-counter"
-                  >0</span
-                ></span
-              >
-              <button
-                id="increment-global"
-                data-testid="increment-global"
-                class="btn"
-              >
-                +1
-              </button>
-              <button
-                id="increment-global-5"
-                data-testid="increment-global-5"
-                class="btn"
-              >
-                +5
-              </button>
-              <button
-                id="reset-global"
-                data-testid="reset-global"
-                class="btn btn-secondary"
-              >
-                Reset
-              </button>
-            </div>
-            <p class="issue">
-              ⚠️ Issue: Tests depending on this counter will fail if run in
-              different orders.
-            </p>
-          </div>
 
-          <div class="demo-section">
-            <h3>📝 Shared Form Data (Problematic)</h3>
-            <p>Form data that persists between sessions:</p>
-            <form id="persistent-form" data-testid="persistent-form">
-              <div class="form-group">
-                <label for="persistent-name">Name:</label>
-                <input
-                  type="text"
-                  id="persistent-name"
-                  data-testid="persistent-name"
-                />
-              </div>
-              <div class="form-group">
-                <label for="persistent-role">Role:</label>
-                <select id="persistent-role" data-testid="persistent-role">
-                  <option value="">Select Role</option>
-                  <option value="admin">Admin</option>
-                  <option value="user">User</option>
-                  <option value="guest">Guest</option>
-                </select>
-              </div>
-              <button
-                type="button"
-                id="save-persistent"
-                data-testid="save-persistent"
-                class="btn btn-primary"
-              >
-                Save Data
-              </button>
-              <button
-                type="button"
-                id="clear-persistent"
-                data-testid="clear-persistent"
-                class="btn btn-secondary"
-              >
-                Clear Data
-              </button>
-            </form>
-            <div
-              id="persistent-status"
-              data-testid="persistent-status"
-              class="status-display"
-            ></div>
-            <p class="issue">
-              ⚠️ Issue: Tests expecting empty forms will fail if previous tests
-              left data.
-            </p>
-          </div>
-
-          <div class="demo-section">
-            <h3>🔐 Authentication State (Problematic)</h3>
-            <p>Login state that persists across sessions:</p>
-            <div class="auth-container">
-              <div id="login-section" data-testid="login-section">
-                <div class="form-group">
-                  <label for="username">Username:</label>
-                  <input
-                    type="text"
-                    id="username"
-                    data-testid="username"
-                    value="testuser"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="password">Password:</label>
-                  <input
-                    type="password"
-                    id="password"
-                    data-testid="password"
-                    value="password123"
-                  />
-                </div>
-                <button
-                  id="login-btn"
-                  data-testid="login-btn"
-                  class="btn btn-primary"
-                >
-                  Login
-                </button>
-              </div>
-
-              <div
-                id="logged-in-section"
-                data-testid="logged-in-section"
-                style="display: none"
-              >
+            <div class="demo-sections">
+              <div class="demo-section">
+                <h3>🌍 Global Counter (Problematic)</h3>
                 <p>
-                  Welcome back,
-                  <span id="logged-in-user" data-testid="logged-in-user"></span
-                  >!
+                  This counter persists across page reloads and affects all
+                  tests:
                 </p>
-                <button
-                  id="logout-btn"
-                  data-testid="logout-btn"
-                  class="btn btn-secondary"
-                >
-                  Logout
-                </button>
-              </div>
-
-              <div class="auth-status">
-                <p>
-                  Auth Status:
-                  <span id="auth-status" data-testid="auth-status"
-                    >Not Logged In</span
+                <div class="counter-display">
+                  <span
+                    >Global Counter:
+                    <span id="global-counter" data-testid="global-counter"
+                      >0</span
+                    ></span
                   >
-                </p>
-                <p>
-                  Session Time:
-                  <span id="session-time" data-testid="session-time">N/A</span>
+                  <button
+                    id="increment-global"
+                    data-testid="increment-global"
+                    class="btn"
+                  >
+                    +1
+                  </button>
+                  <button
+                    id="increment-global-5"
+                    data-testid="increment-global-5"
+                    class="btn"
+                  >
+                    +5
+                  </button>
+                  <button
+                    id="reset-global"
+                    data-testid="reset-global"
+                    class="btn btn-secondary"
+                  >
+                    Reset
+                  </button>
+                </div>
+                <p class="issue">
+                  ⚠️ Issue: Tests depending on this counter will fail if run in
+                  different orders.
                 </p>
               </div>
-            </div>
-            <p class="issue">
-              ⚠️ Issue: Tests expecting logged-out state will fail if previous
-              tests logged in.
-            </p>
-          </div>
 
-          <div class="demo-section good-practice">
-            <h3>✅ Isolated Counter (Good Practice)</h3>
-            <p>This counter resets on each page load:</p>
-            <div class="counter-display">
-              <span
-                >Session Counter:
-                <span id="session-counter" data-testid="session-counter"
-                  >0</span
-                ></span
-              >
-              <button
-                id="increment-session"
-                data-testid="increment-session"
-                class="btn"
-              >
-                +1
-              </button>
-              <button
-                id="increment-session-5"
-                data-testid="increment-session-5"
-                class="btn"
-              >
-                +5
-              </button>
-              <button
-                id="reset-session"
-                data-testid="reset-session"
-                class="btn btn-secondary"
-              >
-                Reset
-              </button>
+              <div class="demo-section">
+                <h3>📝 Shared Form Data (Problematic)</h3>
+                <p>Form data that persists between sessions:</p>
+                <form id="persistent-form" data-testid="persistent-form">
+                  <div class="form-group">
+                    <label for="persistent-name">Name:</label>
+                    <input
+                      type="text"
+                      id="persistent-name"
+                      data-testid="persistent-name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="persistent-role">Role:</label>
+                    <select id="persistent-role" data-testid="persistent-role">
+                      <option value="">Select Role</option>
+                      <option value="admin">Admin</option>
+                      <option value="user">User</option>
+                      <option value="guest">Guest</option>
+                    </select>
+                  </div>
+                  <button
+                    type="button"
+                    id="save-persistent"
+                    data-testid="save-persistent"
+                    class="btn btn-primary"
+                  >
+                    Save Data
+                  </button>
+                  <button
+                    type="button"
+                    id="clear-persistent"
+                    data-testid="clear-persistent"
+                    class="btn btn-secondary"
+                  >
+                    Clear Data
+                  </button>
+                </form>
+                <div
+                  id="persistent-status"
+                  data-testid="persistent-status"
+                  class="status-display"
+                ></div>
+                <p class="issue">
+                  ⚠️ Issue: Tests expecting empty forms will fail if previous
+                  tests left data.
+                </p>
+              </div>
+
+              <div class="demo-section">
+                <h3>🔐 Authentication State (Problematic)</h3>
+                <p>Login state that persists across sessions:</p>
+                <div class="auth-container">
+                  <div id="login-section" data-testid="login-section">
+                    <div class="form-group">
+                      <label for="username">Username:</label>
+                      <input
+                        type="text"
+                        id="username"
+                        data-testid="username"
+                        value="testuser"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password:</label>
+                      <input
+                        type="password"
+                        id="password"
+                        data-testid="password"
+                        value="password123"
+                      />
+                    </div>
+                    <button
+                      id="login-btn"
+                      data-testid="login-btn"
+                      class="btn btn-primary"
+                    >
+                      Login
+                    </button>
+                  </div>
+
+                  <div
+                    id="logged-in-section"
+                    data-testid="logged-in-section"
+                    style="display: none"
+                  >
+                    <p>
+                      Welcome back,
+                      <span
+                        id="logged-in-user"
+                        data-testid="logged-in-user"
+                      ></span
+                      >!
+                    </p>
+                    <button
+                      id="logout-btn"
+                      data-testid="logout-btn"
+                      class="btn btn-secondary"
+                    >
+                      Logout
+                    </button>
+                  </div>
+
+                  <div class="auth-status">
+                    <p>
+                      Auth Status:
+                      <span id="auth-status" data-testid="auth-status"
+                        >Not Logged In</span
+                      >
+                    </p>
+                    <p>
+                      Session Time:
+                      <span id="session-time" data-testid="session-time"
+                        >N/A</span
+                      >
+                    </p>
+                  </div>
+                </div>
+                <p class="issue">
+                  ⚠️ Issue: Tests expecting logged-out state will fail if
+                  previous tests logged in.
+                </p>
+              </div>
+
+              <div class="demo-section good-practice">
+                <h3>✅ Isolated Counter (Good Practice)</h3>
+                <p>This counter resets on each page load:</p>
+                <div class="counter-display">
+                  <span
+                    >Session Counter:
+                    <span id="session-counter" data-testid="session-counter"
+                      >0</span
+                    ></span
+                  >
+                  <button
+                    id="increment-session"
+                    data-testid="increment-session"
+                    class="btn"
+                  >
+                    +1
+                  </button>
+                  <button
+                    id="increment-session-5"
+                    data-testid="increment-session-5"
+                    class="btn"
+                  >
+                    +5
+                  </button>
+                  <button
+                    id="reset-session"
+                    data-testid="reset-session"
+                    class="btn btn-secondary"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="isolation-tips">
+              <h3>🚨 Shared State Prevention Tips</h3>
+              <ul>
+                <li>
+                  Always clear localStorage/sessionStorage before each test
+                </li>
+                <li>Use test.beforeEach() to reset application state</li>
+                <li>Avoid relying on data from previous tests</li>
+                <li>Use fresh browser contexts for complete isolation</li>
+                <li>Reset databases or use test-specific data</li>
+                <li>Clear authentication tokens between tests</li>
+                <li>
+                  Use page.evaluate() to clear browser storage programmatically
+                </li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div class="isolation-tips">
-          <h3>🚨 Shared State Prevention Tips</h3>
-          <ul>
-            <li>Always clear localStorage/sessionStorage before each test</li>
-            <li>Use test.beforeEach() to reset application state</li>
-            <li>Avoid relying on data from previous tests</li>
-            <li>Use fresh browser contexts for complete isolation</li>
-            <li>Reset databases or use test-specific data</li>
-            <li>Clear authentication tokens between tests</li>
-            <li>Use page.evaluate() to clear browser storage programmatically</li>
-          </ul>
-        </div>
+        <!-- Ad Component Sidebar -->
+        <aside class="ad-sidebar">
+          <div id="ad-container" class="ad-container">
+            <div id="ad-placeholder" class="ad-placeholder">
+              <p>🍪 Ads require cookie consent</p>
+              <button id="consent-ads" class="btn btn-small">Allow Ads</button>
+            </div>
+            <div
+              id="google-ad-slot"
+              class="google-ad-slot"
+              style="display: none"
+            >
+              <!-- Google Ad will load here -->
+            </div>
+          </div>
+        </aside>
       </div>
     </main>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none">
+      <div class="cookie-content">
+        <p>
+          We use cookies to personalize ads and analyze traffic.
+          <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+        </p>
+        <div class="cookie-buttons">
+          <button id="accept-cookies" class="btn btn-primary">
+            Accept All
+          </button>
+          <button id="reject-cookies" class="btn btn-secondary">Reject</button>
+          <button id="manage-cookies" class="btn btn-outline">Manage</button>
+        </div>
+      </div>
+    </div>
 
     <script>
       let sessionCounter = 0;
@@ -414,10 +464,6 @@
         document.getElementById("session-time").textContent = "N/A";
       }
     </script>
+    <script src="ad-component.js"></script>
   </body>
-</html>
-      
-    </script>
-  </body>
-</html>
 </html>

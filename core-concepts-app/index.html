@@ -6,6 +6,7 @@
     <title>Playwright Core Concepts - Test App</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="component-styles.css" />
+    <link rel="stylesheet" href="ad-component.css" />
   </head>
   <body>
     <header>
@@ -21,58 +22,104 @@
     </header>
 
     <main>
-      <section class="welcome">
-        <h2>Welcome to the Core Concepts Practice App</h2>
-        <p>
-          This application is designed to help you practice Playwright core
-          concepts:
-        </p>
-
-        <div class="concept-cards">
-          <div class="card">
-            <h3>Browser Context</h3>
+      <div class="page-layout">
+        <div class="main-content">
+          <section class="welcome">
+            <h2>Welcome to the Core Concepts Practice App</h2>
             <p>
-              Practice working with browser contexts and understanding isolation
-              principles.
+              This application is designed to help you practice Playwright core
+              concepts:
             </p>
-            <a href="context.html" class="btn">Explore Context</a>
-          </div>
 
-          <div class="card">
-            <h3>Test Independence</h3>
-            <p>
-              Learn how to keep tests independent and avoid shared state issues.
-            </p>
-            <a href="isolation-test.html" class="btn">Test Isolation</a>
-          </div>
+            <div class="concept-cards">
+              <div class="card">
+                <h3>Browser Context</h3>
+                <p>
+                  Practice working with browser contexts and understanding
+                  isolation principles.
+                </p>
+                <a href="context.html" class="btn">Explore Context</a>
+              </div>
 
-          <div class="card">
-            <h3>State Management</h3>
-            <p>
-              Understand how state can affect test reliability and independence.
-            </p>
-            <a href="shared-state.html" class="btn">Shared State Demo</a>
+              <div class="card">
+                <h3>Test Independence</h3>
+                <p>
+                  Learn how to keep tests independent and avoid shared state
+                  issues.
+                </p>
+                <a href="isolation-test.html" class="btn">Test Isolation</a>
+              </div>
+
+              <div class="card">
+                <h3>State Management</h3>
+                <p>
+                  Understand how state can affect test reliability and
+                  independence.
+                </p>
+                <a href="shared-state.html" class="btn">Shared State Demo</a>
+              </div>
+            </div>
+          </section>
+
+          <div class="isolation-tips">
+            <h3>🎯 Core Testing Principles</h3>
+            <ul>
+              <li>
+                Tests should be independent and not rely on execution order
+              </li>
+              <li>Each test should set up its own required state</li>
+              <li>Clean up after tests to avoid affecting subsequent tests</li>
+              <li>Use data-testid attributes for reliable element selection</li>
+              <li>Prefer explicit waits over implicit timeouts</li>
+              <li>Test user workflows, not implementation details</li>
+            </ul>
           </div>
         </div>
-      </section>
 
-      <div class="isolation-tips">
-        <h3>🎯 Core Testing Principles</h3>
-        <ul>
-          <li>Tests should be independent and not rely on execution order</li>
-          <li>Each test should set up its own required state</li>
-          <li>Clean up after tests to avoid affecting subsequent tests</li>
-          <li>Use data-testid attributes for reliable element selection</li>
-          <li>Prefer explicit waits over implicit timeouts</li>
-          <li>Test user workflows, not implementation details</li>
-        </ul>
+        <!-- Ad Component Sidebar -->
+        <aside class="ad-sidebar">
+          <div id="ad-container" class="ad-container">
+            <div id="ad-placeholder" class="ad-placeholder">
+              <p>🍪 Ads require cookie consent</p>
+              <button id="consent-ads" class="btn btn-small">Allow Ads</button>
+            </div>
+            <div
+              id="google-ad-slot"
+              class="google-ad-slot"
+              style="display: none"
+            >
+              <!-- Google Ad will load here -->
+            </div>
+          </div>
+        </aside>
       </div>
     </main>
 
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none">
+      <div class="cookie-content">
+        <p>
+          We use cookies to personalize ads and analyze traffic.
+          <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+        </p>
+        <div class="cookie-buttons">
+          <button id="accept-cookies" class="btn btn-primary">
+            Accept All
+          </button>
+          <button id="reject-cookies" class="btn btn-secondary">Reject</button>
+          <button id="manage-cookies" class="btn btn-outline">Manage</button>
+        </div>
+      </div>
+    </div>
+
     <footer>
-      <p>&copy; 2025 Glitch IT System - Core Concepts Practice App</p>
+      <p>
+        &copy; 2025 Glitch IT System - Core Concepts Practice App |
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </p>
     </footer>
 
     <script src="app.js"></script>
+    <script src="ad-component.js"></script>
   </body>
 </html>

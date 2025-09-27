@@ -217,6 +217,71 @@ ul#todo-list li:last-child {
   text-align: center;
 }
 
+/* Privacy Policy Styles */
+.privacy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.policy-section {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: white;
+}
+
+.policy-section h3 {
+  color: #495057;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.policy-section h4 {
+  color: #6c757d;
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+
+.cookie-types {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.consent-management {
+  border: 2px solid #28a745;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 30px 0;
+  background-color: #f8fff9;
+}
+
+.consent-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+
+.consent-status {
+  min-height: 20px;
+  margin-top: 15px;
+}
+
+/* Footer link styling */
+footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .concept-cards {

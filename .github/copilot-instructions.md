@@ -6,3 +6,5 @@ Write the code as simple as possible unless I specifically ask for advanced code
 If I ask for manual test cases.
 Give a super simple example of a manual test case that illustrates the concept.
 Always provide detailed learning points that explain the concept.
+
+If I ask for updates to the web application, ignore any playwright instructions.

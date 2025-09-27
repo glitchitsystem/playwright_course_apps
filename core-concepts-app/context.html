@@ -6,6 +6,7 @@
     <title>Context Demo - Playwright Test App</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="component-styles.css" />
+    <link rel="stylesheet" href="ad-component.css" />
   </head>
   <body>
     <header>
@@ -21,126 +22,178 @@
     </header>
 
     <main>
-      <div class="context-container context">
-        <h2>Browser Context Demo</h2>
-        <p class="context-info">
-          This page demonstrates browser context behavior. In Playwright, each
-          test gets a fresh context by default, ensuring isolation.
-        </p>
+      <div class="page-layout">
+        <div class="main-content">
+          <div class="context-container context">
+            <h2>Browser Context Demo</h2>
+            <p class="context-info">
+              This page demonstrates browser context behavior. In Playwright,
+              each test gets a fresh context by default, ensuring isolation.
+            </p>
 
-        <div class="state-demo">
-          <h3>Local State Demo</h3>
-          <div class="form-group">
-            <label for="username-a">Username:</label>
-            <input
-              type="text"
-              id="username-a"
-              data-testid="username-input"
-              placeholder="Enter username for Context A"
-            />
+            <div class="state-demo">
+              <h3>Local State Demo</h3>
+              <div class="form-group">
+                <label for="username-a">Username:</label>
+                <input
+                  type="text"
+                  id="username-a"
+                  data-testid="username-input"
+                  placeholder="Enter username for Context A"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="theme-a">Theme:</label>
+                <select id="theme-a" data-testid="theme-select">
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                  <option value="blue">Blue</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="checkbox"
+                  id="remember-a"
+                  data-testid="remember-checkbox"
+                />
+                <label for="remember-a">Remember my settings</label>
+              </div>
+
+              <button
+                id="save-context"
+                data-testid="save-button"
+                class="btn btn-primary"
+              >
+                Save Context A Settings
+              </button>
+            </div>
+
+            <div class="counter-demo">
+              <h3>Counter Demo</h3>
+              <p>
+                Counter Value:
+                <span id="counter-a" data-testid="counter-value">0</span>
+              </p>
+              <button
+                id="increment-a"
+                data-testid="increment-button"
+                class="btn"
+              >
+                Increment
+              </button>
+              <button
+                id="decrement-a"
+                data-testid="decrement-button"
+                class="btn"
+              >
+                Decrement
+              </button>
+              <button
+                id="reset-a"
+                data-testid="reset-button"
+                class="btn btn-secondary"
+              >
+                Reset
+              </button>
+            </div>
+
+            <div class="session-info">
+              <h3>Session Information</h3>
+              <p>Context ID: <span data-testid="context-id">CONTEXT_A</span></p>
+              <p>
+                Page Load Time:
+                <span id="load-time-a" data-testid="load-time"></span>
+              </p>
+              <p>
+                Session Storage:
+                <span id="session-storage-a" data-testid="session-storage"
+                  >Empty</span
+                >
+              </p>
+            </div>
+
+            <div class="navigation-test">
+              <h3>Navigation Test</h3>
+              <p>
+                Use these links to test page navigation within the same context:
+              </p>
+              <a
+                href="shared-state.html"
+                data-testid="navigate-shared-state"
+                class="btn btn-outline"
+                >Go to Shared State</a
+              >
+              <a
+                href="isolation-test.html"
+                data-testid="navigate-isolation"
+                class="btn btn-outline"
+                >Go to Isolation Test</a
+              >
+            </div>
+
+            <div class="isolation-tips">
+              <h3>🔧 Context Management Tips</h3>
+              <ul>
+                <li>
+                  Each Playwright test gets a fresh browser context by default
+                </li>
+                <li>
+                  Browser contexts isolate cookies, localStorage, and
+                  sessionStorage
+                </li>
+                <li>
+                  Use context.clearCookies() to reset authentication state
+                </li>
+                <li>
+                  LocalStorage persists across page reloads within the same
+                  context
+                </li>
+                <li>
+                  SessionStorage is cleared when the browser context closes
+                </li>
+                <li>Create new contexts for testing different user sessions</li>
+              </ul>
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="theme-a">Theme:</label>
-            <select id="theme-a" data-testid="theme-select">
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="blue">Blue</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <input
-              type="checkbox"
-              id="remember-a"
-              data-testid="remember-checkbox"
-            />
-            <label for="remember-a">Remember my settings</label>
-          </div>
-
-          <button
-            id="save-context"
-            data-testid="save-button"
-            class="btn btn-primary"
-          >
-            Save Context A Settings
-          </button>
         </div>
 
-        <div class="counter-demo">
-          <h3>Counter Demo</h3>
-          <p>
-            Counter Value:
-            <span id="counter-a" data-testid="counter-value">0</span>
-          </p>
-          <button id="increment-a" data-testid="increment-button" class="btn">
-            Increment
-          </button>
-          <button id="decrement-a" data-testid="decrement-button" class="btn">
-            Decrement
-          </button>
-          <button
-            id="reset-a"
-            data-testid="reset-button"
-            class="btn btn-secondary"
-          >
-            Reset
-          </button>
-        </div>
-
-        <div class="session-info">
-          <h3>Session Information</h3>
-          <p>Context ID: <span data-testid="context-id">CONTEXT_A</span></p>
-          <p>
-            Page Load Time:
-            <span id="load-time-a" data-testid="load-time"></span>
-          </p>
-          <p>
-            Session Storage:
-            <span id="session-storage-a" data-testid="session-storage"
-              >Empty</span
+        <!-- Ad Component Sidebar -->
+        <aside class="ad-sidebar">
+          <div id="ad-container" class="ad-container">
+            <div id="ad-placeholder" class="ad-placeholder">
+              <p>🍪 Ads require cookie consent</p>
+              <button id="consent-ads" class="btn btn-small">Allow Ads</button>
+            </div>
+            <div
+              id="google-ad-slot"
+              class="google-ad-slot"
+              style="display: none"
             >
-          </p>
-        </div>
-
-        <div class="navigation-test">
-          <h3>Navigation Test</h3>
-          <p>
-            Use these links to test page navigation within the same context:
-          </p>
-          <a
-            href="shared-state.html"
-            data-testid="navigate-shared-state"
-            class="btn btn-outline"
-            >Go to Shared State</a
-          >
-          <a
-            href="isolation-test.html"
-            data-testid="navigate-isolation"
-            class="btn btn-outline"
-            >Go to Isolation Test</a
-          >
-        </div>
-
-        <div class="isolation-tips">
-          <h3>🔧 Context Management Tips</h3>
-          <ul>
-            <li>
-              Each Playwright test gets a fresh browser context by default
-            </li>
-            <li>
-              Browser contexts isolate cookies, localStorage, and sessionStorage
-            </li>
-            <li>Use context.clearCookies() to reset authentication state</li>
-            <li>
-              LocalStorage persists across page reloads within the same context
-            </li>
-            <li>SessionStorage is cleared when the browser context closes</li>
-            <li>Create new contexts for testing different user sessions</li>
-          </ul>
-        </div>
+              <!-- Google Ad will load here -->
+            </div>
+          </div>
+        </aside>
       </div>
     </main>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none">
+      <div class="cookie-content">
+        <p>
+          We use cookies to personalize ads and analyze traffic.
+          <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+        </p>
+        <div class="cookie-buttons">
+          <button id="accept-cookies" class="btn btn-primary">
+            Accept All
+          </button>
+          <button id="reject-cookies" class="btn btn-secondary">Reject</button>
+          <button id="manage-cookies" class="btn btn-outline">Manage</button>
+        </div>
+      </div>
+    </div>
 
     <script>
       // Context A specific JavaScript
@@ -279,5 +332,6 @@
         document.getElementById("theme-a").value = theme;
       }
     </script>
+    <script src="ad-component.js"></script>
   </body>
 </html>
