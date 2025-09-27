@@ -66,7 +66,7 @@
                 data-testid="save-button"
                 class="btn btn-primary"
               >
-                Save Context A Settings
+                Save Settings
               </button>
             </div>
 
@@ -101,7 +101,10 @@
 
             <div class="session-info">
               <h3>Session Information</h3>
-              <p>Context ID: <span data-testid="context-id">CONTEXT_A</span></p>
+              <p>
+                Context ID:
+                <span id="context-id" data-testid="context-id"></span>
+              </p>
               <p>
                 Page Load Time:
                 <span id="load-time-a" data-testid="load-time"></span>
@@ -198,6 +201,10 @@
     <script>
       // Context A specific JavaScript
       document.addEventListener("DOMContentLoaded", function () {
+        // Generate random context ID
+        const contextId = generateContextId();
+        document.getElementById("context-id").textContent = contextId;
+
         const loadTime = new Date().toLocaleTimeString();
         document.getElementById("load-time-a").textContent = loadTime;
 
@@ -212,8 +219,8 @@
           .getElementById("theme-a")
           .addEventListener("change", function () {
             const selectedTheme = this.value;
-            localStorage.setItem("theme-A", selectedTheme);
-            applyTheme();
+            // Don't save immediately on change - let user decide with Save button
+            applyTheme(selectedTheme);
           });
 
         // Counter functionality
@@ -242,13 +249,32 @@
         document
           .getElementById("save-context")
           .addEventListener("click", () => {
+            // Get current form values including theme
+            const currentTheme = document.getElementById("theme-a").value;
+
+            // Save all settings including theme
             saveContextState("A");
-            showNotification("Context A settings saved!");
+            localStorage.setItem("theme-A", currentTheme);
+
+            // Apply the saved theme
+            applyTheme(currentTheme);
+
+            showNotification("Settings saved successfully! Theme applied.");
           });
 
         // Update session storage display
         updateSessionDisplay("A");
       });
+
+      function generateContextId() {
+        // Generate a random hash-like string (8 characters)
+        const chars = "ABCDEF0123456789";
+        let result = "CTX_";
+        for (let i = 0; i < 8; i++) {
+          result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+      }
 
       function updateCounter(value, elementId) {
         document.getElementById(elementId).textContent = value;
@@ -290,6 +316,8 @@
           new Date().toLocaleTimeString()
         );
         updateSessionDisplay(context);
+
+        console.log(`Saved theme: ${theme} to localStorage`); // Debug log
       }
 
       function updateSessionDisplay(context) {
@@ -313,8 +341,9 @@
         }, 3000);
       }
 
-      function applyTheme() {
-        const theme = localStorage.getItem("theme-A") || "light";
+      function applyTheme(themeOverride = null) {
+        const theme =
+          themeOverride || localStorage.getItem("theme-A") || "light";
 
         // Remove all theme classes
         document.body.classList.remove(
@@ -323,13 +352,16 @@
           "theme-blue"
         );
 
-        // Apply selected theme
-        if (theme !== "light") {
-          document.body.classList.add(`theme-${theme}`);
-        }
+        // Apply selected theme (always add class, even for light)
+        document.body.classList.add(`theme-${theme}`);
 
         // Update select element to show current theme
-        document.getElementById("theme-a").value = theme;
+        const themeSelect = document.getElementById("theme-a");
+        if (themeSelect) {
+          themeSelect.value = theme;
+        }
+
+        console.log(`Theme applied: ${theme}`); // Debug log
       }
     </script>
     <script src="ad-component.js"></script>

@@ -45,18 +45,7 @@ process.on("SIGTERM", () => {
 const server = app.listen(PORT, async () => {
   console.log(`🎭 Playwright Core Concepts App running at:`);
   console.log(`   Local: http://localhost:${PORT}`);
-  console.log(`\n📚 Available pages:`);
-  console.log(`   • Home: http://localhost:${PORT}/`);
-  console.log(`   • Context A: http://localhost:${PORT}/context.html`);
-  console.log(
-    `   • Shared State Demo: http://localhost:${PORT}/shared-state.html`
-  );
-  console.log(
-    `   • Isolation Test: http://localhost:${PORT}/isolation-test.html`
-  );
-  console.log(
-    `   • Privacy Policy: http://localhost:${PORT}/privacy-policy.html`
-  );
+
   console.log(`\n💡 Use Ctrl+C to stop the server`);
 
   // Auto-open browser

@@ -354,9 +354,32 @@ class AdComponent {
     // Use existing notification system if available
     if (window.CoreConcepts && window.CoreConcepts.showNotification) {
       window.CoreConcepts.showNotification(message, type);
+    } else if (window.showNotification) {
+      window.showNotification(message, type);
     } else {
       // Fallback notification
       console.log(`${type.toUpperCase()}: ${message}`);
+
+      // Simple fallback visual notification
+      const notification = document.createElement("div");
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #007bff;
+        color: white;
+        padding: 1rem;
+        border-radius: 4px;
+        z-index: 1000;
+      `;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 3000);
     }
   }
 
