@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Playwright Core Concepts - Test App</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="component-styles.css" />
   </head>
   <body>
     <header>
@@ -12,9 +13,8 @@
       <nav>
         <ul>
           <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="context-a.html">Context A</a></li>
-          <li><a href="context-b.html">Context B</a></li>
-          <li><a href="shared-state.html">Shared State Demo</a></li>
+          <li><a href="context.html">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
           <li><a href="isolation-test.html">Isolation Test</a></li>
         </ul>
       </nav>
@@ -30,13 +30,12 @@
 
         <div class="concept-cards">
           <div class="card">
-            <h3>Browser & Context</h3>
+            <h3>Browser Context</h3>
             <p>
-              Practice working with different browser contexts and understanding
-              isolation.
+              Practice working with browser contexts and understanding isolation
+              principles.
             </p>
-            <a href="context-a.html" class="btn">Explore Context A</a>
-            <a href="context-b.html" class="btn">Explore Context B</a>
+            <a href="context.html" class="btn">Explore Context</a>
           </div>
 
           <div class="card">
@@ -57,36 +56,21 @@
         </div>
       </section>
 
-      <section class="instructions">
-        <h3>Testing Instructions</h3>
-        <div class="instruction-list">
-          <div class="instruction">
-            <h4>🎯 Practice Browser Contexts</h4>
-            <p>
-              Navigate between Context A and Context B pages. Notice how each
-              maintains separate state and cookies.
-            </p>
-          </div>
-          <div class="instruction">
-            <h4>🔒 Test Isolation</h4>
-            <p>
-              Use the Isolation Test page to practice creating independent tests
-              that don't affect each other.
-            </p>
-          </div>
-          <div class="instruction">
-            <h4>📊 State Independence</h4>
-            <p>
-              Experiment with the Shared State Demo to understand how shared
-              state can break test independence.
-            </p>
-          </div>
-        </div>
-      </section>
+      <div class="isolation-tips">
+        <h3>🎯 Core Testing Principles</h3>
+        <ul>
+          <li>Tests should be independent and not rely on execution order</li>
+          <li>Each test should set up its own required state</li>
+          <li>Clean up after tests to avoid affecting subsequent tests</li>
+          <li>Use data-testid attributes for reliable element selection</li>
+          <li>Prefer explicit waits over implicit timeouts</li>
+          <li>Test user workflows, not implementation details</li>
+        </ul>
+      </div>
     </main>
 
     <footer>
-      <p>&copy; 2024 Playwright Course - Core Concepts Practice App</p>
+      <p>&copy; 2025 Glitch IT System - Core Concepts Practice App</p>
     </footer>
 
     <script src="app.js"></script>

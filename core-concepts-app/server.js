@@ -47,7 +47,7 @@ const server = app.listen(PORT, async () => {
   console.log(`   Local: http://localhost:${PORT}`);
   console.log(`\n📚 Available pages:`);
   console.log(`   • Home: http://localhost:${PORT}/`);
-  console.log(`   • Context A: http://localhost:${PORT}/context-a.html`);
+  console.log(`   • Context A: http://localhost:${PORT}/context.html`);
   console.log(`   • Context B: http://localhost:${PORT}/context-b.html`);
   console.log(
     `   • Isolation Test: http://localhost:${PORT}/isolation-test.html`

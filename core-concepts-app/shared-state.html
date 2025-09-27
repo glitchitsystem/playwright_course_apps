@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shared State Demo - Playwright Test App</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="component-styles.css" />
   </head>
   <body>
     <header>
@@ -12,10 +13,9 @@
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="context-a.html">Context A</a></li>
-          <li><a href="context-b.html">Context B</a></li>
+          <li><a href="context.html">Context</a></li>
           <li>
-            <a href="shared-state.html" class="active">Shared State Demo</a>
+            <a href="shared-state.html" class="active">Shared State</a>
           </li>
           <li><a href="isolation-test.html">Isolation Test</a></li>
         </ul>
@@ -222,88 +222,19 @@
                 Reset
               </button>
             </div>
-            <p class="good">
-              ✅ Good: This counter starts fresh for every test run.
-            </p>
           </div>
         </div>
 
-        <div class="testing-scenarios">
-          <h3>🧪 Testing Scenarios</h3>
-          <div class="scenario-list">
-            <div class="scenario-item">
-              <h4>Scenario 1: Test the Global Counter</h4>
-              <p>
-                Write tests that expect the counter to start at 0. Run them
-                multiple times to see how shared state breaks them.
-              </p>
-              <button
-                id="test-global-scenario"
-                data-testid="test-global-scenario"
-                class="btn btn-outline"
-              >
-                Run Test Simulation
-              </button>
-              <div
-                id="global-test-result"
-                data-testid="global-test-result"
-                class="test-result"
-              ></div>
-            </div>
-
-            <div class="scenario-item">
-              <h4>Scenario 2: Test Form Persistence</h4>
-              <p>
-                Write tests that expect empty forms. See how previous data
-                affects new tests.
-              </p>
-              <button
-                id="test-form-scenario"
-                data-testid="test-form-scenario"
-                class="btn btn-outline"
-              >
-                Run Test Simulation
-              </button>
-              <div
-                id="form-test-result"
-                data-testid="form-test-result"
-                class="test-result"
-              ></div>
-            </div>
-
-            <div class="scenario-item">
-              <h4>Scenario 3: Test Authentication</h4>
-              <p>
-                Write tests that expect logged-out state. See how persistent
-                auth breaks assumptions.
-              </p>
-              <button
-                id="test-auth-scenario"
-                data-testid="test-auth-scenario"
-                class="btn btn-outline"
-              >
-                Run Test Simulation
-              </button>
-              <div
-                id="auth-test-result"
-                data-testid="auth-test-result"
-                class="test-result"
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="best-practices">
-          <h3>💡 Best Practices for Test Independence</h3>
+        <div class="isolation-tips">
+          <h3>🚨 Shared State Prevention Tips</h3>
           <ul>
-            <li>Always reset state before each test</li>
-            <li>
-              Don't rely on localStorage or sessionStorage from previous tests
-            </li>
-            <li>Clear cookies and authentication before each test</li>
+            <li>Always clear localStorage/sessionStorage before each test</li>
+            <li>Use test.beforeEach() to reset application state</li>
+            <li>Avoid relying on data from previous tests</li>
             <li>Use fresh browser contexts for complete isolation</li>
             <li>Reset databases or use test-specific data</li>
-            <li>Avoid global variables that persist between tests</li>
+            <li>Clear authentication tokens between tests</li>
+            <li>Use page.evaluate() to clear browser storage programmatically</li>
           </ul>
         </div>
       </div>
@@ -399,17 +330,6 @@
         document
           .getElementById("logout-btn")
           .addEventListener("click", performLogout);
-
-        // Test scenarios
-        document
-          .getElementById("test-global-scenario")
-          .addEventListener("click", testGlobalScenario);
-        document
-          .getElementById("test-form-scenario")
-          .addEventListener("click", testFormScenario);
-        document
-          .getElementById("test-auth-scenario")
-          .addEventListener("click", testAuthScenario);
       }
 
       function loadPersistentForm() {
@@ -493,47 +413,11 @@
         document.getElementById("auth-status").textContent = "Not Logged In";
         document.getElementById("session-time").textContent = "N/A";
       }
-
-      // Test scenario simulations
-      function testGlobalScenario() {
-        const currentValue = parseInt(
-          localStorage.getItem("global-counter") || "0"
-        );
-        const result = document.getElementById("global-test-result");
-
-        if (currentValue === 0) {
-          result.innerHTML =
-            '<div class="success">✅ Test PASSED: Counter starts at 0</div>';
-        } else {
-          result.innerHTML = `<div class="error">❌ Test FAILED: Expected 0, but counter is ${currentValue}</div>`;
-        }
-      }
-
-      function testFormScenario() {
-        const name = localStorage.getItem("persistent-name") || "";
-        const role = localStorage.getItem("persistent-role") || "";
-        const result = document.getElementById("form-test-result");
-
-        if (!name && !role) {
-          result.innerHTML =
-            '<div class="success">✅ Test PASSED: Form is empty</div>';
-        } else {
-          result.innerHTML = `<div class="error">❌ Test FAILED: Expected empty form, but found data: name="${name}", role="${role}"</div>`;
-        }
-      }
-
-      function testAuthScenario() {
-        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-        const result = document.getElementById("auth-test-result");
-
-        if (!isLoggedIn) {
-          result.innerHTML =
-            '<div class="success">✅ Test PASSED: User is logged out</div>';
-        } else {
-          const username = localStorage.getItem("logged-in-username");
-          result.innerHTML = `<div class="error">❌ Test FAILED: Expected logged out, but user "${username}" is logged in</div>`;
-        }
-      }
     </script>
   </body>
+</html>
+      
+    </script>
+  </body>
+</html>
 </html>

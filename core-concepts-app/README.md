@@ -48,7 +48,7 @@ A front-end application designed for practicing Playwright core concepts includi
 
 ```
 ├── index.html              # Home page with navigation
-├── context-a.html          # Browser Context A demo
+├── context.html          # Browser Context A demo
 ├── context-b.html          # Browser Context B demo
 ├── isolation-test.html     # Test isolation practice scenarios
 ├── shared-state.html       # Shared state problems demonstration

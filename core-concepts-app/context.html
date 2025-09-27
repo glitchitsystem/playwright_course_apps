@@ -3,29 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Context A - Playwright Test App</title>
+    <title>Context Demo - Playwright Test App</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="component-styles.css" />
   </head>
   <body>
     <header>
-      <h1>Context A - Browser Context Demo</h1>
+      <h1>Browser Context Demonstration</h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="context-a.html" class="active">Context A</a></li>
-          <li><a href="context-b.html">Context B</a></li>
-          <li><a href="shared-state.html">Shared State Demo</a></li>
+          <li><a href="context.html" class="active">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
           <li><a href="isolation-test.html">Isolation Test</a></li>
         </ul>
       </nav>
     </header>
 
     <main>
-      <div class="context-container context-a">
-        <h2>Browser Context A</h2>
+      <div class="context-container context">
+        <h2>Browser Context Demo</h2>
         <p class="context-info">
-          This page represents a separate browser context. State here should be
-          isolated from Context B.
+          This page demonstrates browser context behavior. In Playwright, each
+          test gets a fresh context by default, ensuring isolation.
         </p>
 
         <div class="state-demo">
@@ -59,7 +59,7 @@
           </div>
 
           <button
-            id="save-context-a"
+            id="save-context"
             data-testid="save-button"
             class="btn btn-primary"
           >
@@ -109,10 +109,10 @@
             Use these links to test page navigation within the same context:
           </p>
           <a
-            href="context-b.html"
-            data-testid="navigate-context-b"
+            href="shared-state.html"
+            data-testid="navigate-shared-state"
             class="btn btn-outline"
-            >Go to Context B</a
+            >Go to Shared State</a
           >
           <a
             href="isolation-test.html"
@@ -120,6 +120,24 @@
             class="btn btn-outline"
             >Go to Isolation Test</a
           >
+        </div>
+
+        <div class="isolation-tips">
+          <h3>🔧 Context Management Tips</h3>
+          <ul>
+            <li>
+              Each Playwright test gets a fresh browser context by default
+            </li>
+            <li>
+              Browser contexts isolate cookies, localStorage, and sessionStorage
+            </li>
+            <li>Use context.clearCookies() to reset authentication state</li>
+            <li>
+              LocalStorage persists across page reloads within the same context
+            </li>
+            <li>SessionStorage is cleared when the browser context closes</li>
+            <li>Create new contexts for testing different user sessions</li>
+          </ul>
         </div>
       </div>
     </main>
@@ -132,6 +150,18 @@
 
         // Load saved state from localStorage
         loadContextState("A");
+
+        // Apply saved theme
+        applyTheme();
+
+        // Add theme change listener
+        document
+          .getElementById("theme-a")
+          .addEventListener("change", function () {
+            const selectedTheme = this.value;
+            localStorage.setItem("theme-A", selectedTheme);
+            applyTheme();
+          });
 
         // Counter functionality
         let counter = parseInt(localStorage.getItem("counter-a") || "0");
@@ -157,7 +187,7 @@
 
         // Save context settings
         document
-          .getElementById("save-context-a")
+          .getElementById("save-context")
           .addEventListener("click", () => {
             saveContextState("A");
             showNotification("Context A settings saved!");
@@ -228,6 +258,25 @@
         setTimeout(() => {
           notification.remove();
         }, 3000);
+      }
+
+      function applyTheme() {
+        const theme = localStorage.getItem("theme-A") || "light";
+
+        // Remove all theme classes
+        document.body.classList.remove(
+          "theme-light",
+          "theme-dark",
+          "theme-blue"
+        );
+
+        // Apply selected theme
+        if (theme !== "light") {
+          document.body.classList.add(`theme-${theme}`);
+        }
+
+        // Update select element to show current theme
+        document.getElementById("theme-a").value = theme;
       }
     </script>
   </body>
