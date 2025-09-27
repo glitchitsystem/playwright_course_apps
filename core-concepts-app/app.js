@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize common UI features
   initializeCommonFeatures();
+
+  // Update copyright year
+  updateCopyrightYear();
 });
 
 function updateActiveNavigation() {
@@ -124,6 +127,18 @@ function getNotificationColor(type) {
     error: "#dc3545",
   };
   return colors[type] || colors.info;
+}
+
+function updateCopyrightYear() {
+  const currentYear = new Date().getFullYear();
+  const copyrightElement = document.querySelector("footer p");
+
+  if (copyrightElement) {
+    const copyrightText = copyrightElement.innerHTML;
+    // Replace any 4-digit year (2020-2099) with current year
+    const updatedText = copyrightText.replace(/20\d{2}/, currentYear);
+    copyrightElement.innerHTML = updatedText;
+  }
 }
 
 // Add CSS for notification animations

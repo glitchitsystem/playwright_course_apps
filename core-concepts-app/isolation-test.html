@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Isolation - Playwright Test App</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="component-styles.css" />
-    <link rel="stylesheet" href="ad-component.css" />
   </head>
   <body>
     <header>
@@ -416,6 +414,25 @@
             features.length > 0 ? features.join(", ") : "None";
         }
 
+        // Add functionality to action buttons
+        document
+          .querySelector('[data-testid="feature-a-action"]')
+          .addEventListener("click", function () {
+            window.CoreConcepts?.showNotification(
+              "Feature A action executed!",
+              "success"
+            ) || alert("Feature A action executed!");
+          });
+
+        document
+          .querySelector('[data-testid="feature-b-action"]')
+          .addEventListener("click", function () {
+            window.CoreConcepts?.showNotification(
+              "Feature B action executed!",
+              "info"
+            ) || alert("Feature B action executed!");
+          });
+
         // Scenario 4: Data Table
         let tableData = [];
         let rowId = 1;
@@ -487,4 +504,6 @@
     </script>
     <script src="ad-component.js"></script>
   </body>
+</html>
+</html>
 </html>

@@ -137,6 +137,12 @@ class AdComponent {
   }
 
   showConsentOptions() {
+    // Remove existing modal if it exists
+    const existingModal = document.getElementById("consent-modal");
+    if (existingModal) {
+      existingModal.remove();
+    }
+
     // Create a modal-like consent interface
     const modal = document.createElement("div");
     modal.id = "consent-modal";
@@ -180,49 +186,58 @@ class AdComponent {
             <div style="margin: 20px 0;">
                 <h4 style="color: #555;">Choose your preferences:</h4>
                 <div style="margin: 15px 0;">
-                    <button id="modal-accept-all" class="btn btn-primary" style="margin: 5px;">Accept All</button>
-                    <button id="modal-ads-only" class="btn btn-outline" style="margin: 5px;">Ads Only</button>
-                    <button id="modal-reject-all" class="btn btn-secondary" style="margin: 5px;">Essential Only</button>
+                    <button data-action="accept-all" class="btn ${
+                      currentConsent.ads && currentConsent.analytics
+                        ? "btn-success"
+                        : "btn-outline"
+                    } style="margin: 5px;">Accept All</button>
+                    <button data-action="ads-only" class="btn ${
+                      currentConsent.ads && !currentConsent.analytics
+                        ? "btn-success"
+                        : "btn-outline"
+                    } style="margin: 5px;">Ads Only</button>
+                    <button data-action="reject-all" class="btn ${
+                      !currentConsent.ads && !currentConsent.analytics
+                        ? "btn-success"
+                        : "btn-outline"
+                    } style="margin: 5px;">Essential Only</button>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 20px;">
-                <button id="modal-close" class="btn btn-outline">Close</button>
+                <button data-action="close" class="btn btn-outline">Close</button>
             </div>
         `;
 
     modal.appendChild(modalContent);
-    document.body.appendChild(modal);
 
-    // Add event listeners to modal buttons
-    document
-      .getElementById("modal-accept-all")
-      .addEventListener("click", () => {
-        this.acceptAllCookies();
-        this.closeModal(modal);
-      });
+    // Use event delegation - attach listeners before adding to DOM
+    modalContent.addEventListener("click", (e) => {
+      const action = e.target.getAttribute("data-action");
+      if (!action) return;
 
-    document.getElementById("modal-ads-only").addEventListener("click", () => {
-      this.grantAdConsent();
-      this.closeModal(modal);
-    });
+      e.preventDefault();
+      e.stopPropagation();
 
-    document
-      .getElementById("modal-reject-all")
-      .addEventListener("click", () => {
-        this.rejectCookies();
-        this.closeModal(modal);
-      });
-
-    document.getElementById("modal-close").addEventListener("click", () => {
-      this.closeModal(modal);
-    });
-
-    // Close on background click
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        this.closeModal(modal);
+      switch (action) {
+        case "accept-all":
+          this.acceptAllCookies();
+          this.updateModalContent(modal);
+          break;
+        case "ads-only":
+          this.grantAdConsent();
+          this.updateModalContent(modal);
+          break;
+        case "reject-all":
+          this.rejectCookies();
+          this.updateModalContent(modal);
+          break;
+        case "close":
+          this.closeModal(modal);
+          break;
       }
     });
+
+    document.body.appendChild(modal);
   }
 
   closeModal(modal) {
@@ -402,6 +417,81 @@ class AdComponent {
     localStorage.removeItem(this.cookiesKey);
     this.showAdPlaceholder();
     this.showConsentBannerIfNeeded();
+  }
+
+  updateModalContent(modal) {
+    const modalContent = modal.querySelector("div");
+    if (!modalContent) return;
+
+    const currentConsent = this.getConsentStatus();
+
+    modalContent.innerHTML = `
+            <h3 style="margin-top: 0; color: #333;">Cookie Preferences</h3>
+            <div style="margin: 20px 0;">
+                <h4 style="color: #555;">Current Settings:</h4>
+                <p>🍪 Essential: Always enabled</p>
+                <p>📊 Analytics: ${
+                  currentConsent.analytics
+                    ? '<span style="color: green;">Enabled</span>'
+                    : '<span style="color: red;">Disabled</span>'
+                }</p>
+                <p>📢 Advertising: ${
+                  currentConsent.ads
+                    ? '<span style="color: green;">Enabled</span>'
+                    : '<span style="color: red;">Disabled</span>'
+                }</p>
+            </div>
+            <div style="margin: 20px 0;">
+                <h4 style="color: #555;">Choose your preferences:</h4>
+                <div style="margin: 15px 0;">
+                    <button data-action="accept-all" class="btn ${
+                      currentConsent.ads && currentConsent.analytics
+                        ? "btn-success"
+                        : "btn-outline"
+                    }" style="margin: 5px;">Accept All</button>
+                    <button data-action="ads-only" class="btn ${
+                      currentConsent.ads && !currentConsent.analytics
+                        ? "btn-success"
+                        : "btn-outline"
+                    }" style="margin: 5px;">Ads Only</button>
+                    <button data-action="reject-all" class="btn ${
+                      !currentConsent.ads && !currentConsent.analytics
+                        ? "btn-success"
+                        : "btn-outline"
+                    }" style="margin: 5px;">Essential Only</button>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button data-action="close" class="btn btn-outline">Close</button>
+            </div>
+        `;
+
+    // Re-attach event listeners after updating content
+    modalContent.addEventListener("click", (e) => {
+      const action = e.target.getAttribute("data-action");
+      if (!action) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      switch (action) {
+        case "accept-all":
+          this.acceptAllCookies();
+          this.updateModalContent(modal);
+          break;
+        case "ads-only":
+          this.grantAdConsent();
+          this.updateModalContent(modal);
+          break;
+        case "reject-all":
+          this.rejectCookies();
+          this.updateModalContent(modal);
+          break;
+        case "close":
+          this.closeModal(modal);
+          break;
+      }
+    });
   }
 }
 

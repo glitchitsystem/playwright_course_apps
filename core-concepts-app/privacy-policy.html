@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy - Playwright Test App</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="component-styles.css" />
-    <link rel="stylesheet" href="ad-component.css" />
   </head>
   <body>
     <header>
@@ -149,13 +147,6 @@
               <p>You can change your cookie preferences at any time:</p>
               <div class="consent-buttons">
                 <button
-                  id="view-consent"
-                  class="btn btn-outline"
-                  data-testid="view-consent"
-                >
-                  View Current Preferences
-                </button>
-                <button
                   id="change-consent"
                   class="btn btn-primary"
                   data-testid="change-consent"
@@ -228,20 +219,18 @@
       });
 
       function initializePrivacyPage() {
-        // View current consent preferences
-        document
-          .getElementById("view-consent")
-          .addEventListener("click", () => {
-            showCurrentConsent();
-          });
-
-        // Change consent preferences (show banner)
+        // Change consent preferences - use the ad-component modal
         document
           .getElementById("change-consent")
           .addEventListener("click", () => {
-            const banner = document.getElementById("cookie-banner");
-            if (banner) {
-              banner.style.display = "block";
+            if (window.AdComponent && window.AdComponent.showConsentOptions) {
+              window.AdComponent.showConsentOptions();
+            } else {
+              // Fallback - show banner if ad-component not available
+              const banner = document.getElementById("cookie-banner");
+              if (banner) {
+                banner.style.display = "block";
+              }
             }
           });
 
@@ -264,26 +253,38 @@
       }
 
       function showCurrentConsent() {
-        const consentData = localStorage.getItem("ad-consent");
+        // Use the same logic as ad-component.js getConsentStatus()
+        let consent = null;
+        try {
+          const stored = localStorage.getItem("ad-consent");
+          consent = stored ? JSON.parse(stored) : null;
+        } catch (e) {
+          console.warn("Failed to parse consent data:", e);
+        }
+
         const cookiesAccepted = localStorage.getItem("cookies-accepted");
 
         let status = "Current Cookie Preferences:\n\n";
         status += `• Essential Cookies: Always enabled\n`;
         status += `• Advertising Cookies: ${
-          consentData === "true" ? "Enabled" : "Disabled"
+          (consent && consent.ads) || cookiesAccepted === "true"
+            ? "Enabled"
+            : "Disabled"
         }\n`;
         status += `• Analytics Cookies: ${
-          cookiesAccepted === "true" ? "Enabled" : "Disabled"
+          (consent && consent.analytics) || cookiesAccepted === "true"
+            ? "Enabled"
+            : "Disabled"
         }\n`;
 
         showConsentStatus(status.replace(/\n/g, "<br>"), "info");
       }
 
       function clearAllApplicationData() {
-        // Clear all localStorage items used by the app
+        // Clear all localStorage items used by the app (matching ad-component.js)
         const keysToRemove = [
-          "ad-consent",
-          "cookies-accepted",
+          "ad-consent", // JSON object with ads/analytics/functional
+          "cookies-accepted", // "true", "false", or "ads-only"
           "global-counter",
           "persistent-name",
           "persistent-role",
@@ -303,12 +304,18 @@
         // Clear sessionStorage
         sessionStorage.clear();
 
-        // Reset ads display
-        const adPlaceholder = document.getElementById("ad-placeholder");
-        const googleAdSlot = document.getElementById("google-ad-slot");
+        // Reset ads display using ad-component methods if available
+        if (window.AdComponent) {
+          window.AdComponent.showAdPlaceholder();
+          window.AdComponent.showConsentBannerIfNeeded();
+        } else {
+          // Fallback if ad-component not loaded
+          const adPlaceholder = document.getElementById("ad-placeholder");
+          const googleAdSlot = document.getElementById("google-ad-slot");
 
-        if (adPlaceholder) adPlaceholder.style.display = "flex";
-        if (googleAdSlot) googleAdSlot.style.display = "none";
+          if (adPlaceholder) adPlaceholder.style.display = "flex";
+          if (googleAdSlot) googleAdSlot.style.display = "none";
+        }
 
         // Hide cookie banner
         const banner = document.getElementById("cookie-banner");
@@ -338,4 +345,5 @@
     </script>
     <script src="ad-component.js"></script>
   </body>
+</html>
 </html>
