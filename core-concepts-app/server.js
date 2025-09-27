@@ -5,9 +5,9 @@ const open = require("open");
 const app = express();
 const PORT = 3000;
 
-// Serve static files from current directory
+// Serve static files from src directory
 app.use(
-  express.static(path.join(__dirname), {
+  express.static(path.join(__dirname, "src"), {
     setHeaders: (res, path) => {
       if (path.endsWith(".css")) {
         res.setHeader("Content-Type", "text/css");
@@ -22,7 +22,7 @@ app.use(
 
 // Route for root path
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "src", "index.html"));
 });
 
 // Handle graceful shutdown

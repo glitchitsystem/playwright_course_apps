@@ -44,16 +44,23 @@ A front-end application designed for practicing Playwright core concepts includi
 - **Lecture 17**: Setting up Playwright without the init command
 - **Lecture 18**: Lab 2 - Boilerplate Project
 
-## 📁 Page Structure
+## 📁 Project Structure
 
 ```
-├── index.html              # Home page with navigation
-├── context.html          # Browser Context A demo
-├── context-b.html          # Browser Context B demo
-├── isolation-test.html     # Test isolation practice scenarios
-├── shared-state.html       # Shared state problems demonstration
-├── styles.css              # Application styles
-└── server.js               # Development server
+├── src/                    # Source files
+│   ├── css/               # Stylesheets
+│   │   └── styles.css     # Main application styles
+│   ├── js/                # JavaScript files
+│   │   ├── app.js         # Shared functionality
+│   │   └── ad-component.js # GDPR ad component
+│   ├── index.html         # Home page
+│   ├── context.html       # Browser Context demo
+│   ├── isolation-test.html # Test isolation scenarios
+│   ├── shared-state.html  # Shared state problems
+│   └── privacy-policy.html # Privacy policy page
+├── server.js              # Development server
+├── package.json           # Dependencies and scripts
+└── README.md              # This file
 ```
 
 ## 🧪 Test Scenarios
