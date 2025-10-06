@@ -7,56 +7,134 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <header>
+    <header role="banner" data-testid="page-header">
       <h1>Test Isolation Practice Page</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="context.html">Context</a></li>
-          <li><a href="shared-state.html">Shared State</a></li>
-          <li>
-            <a href="isolation-test.html" class="active">Isolation Test</a>
+      <nav
+        role="navigation"
+        data-testid="main-navigation"
+        title="Main navigation menu"
+      >
+        <ul role="menubar">
+          <li role="none">
+            <a href="index.html" role="menuitem" data-testid="nav-home">Home</a>
+          </li>
+          <li role="none">
+            <a href="context.html" role="menuitem" data-testid="nav-context"
+              >Context</a
+            >
+          </li>
+          <li role="none">
+            <a
+              href="shared-state.html"
+              role="menuitem"
+              data-testid="nav-shared-state"
+              >Shared State</a
+            >
+          </li>
+          <li role="none">
+            <a
+              href="isolation-test.html"
+              class="active"
+              role="menuitem"
+              data-testid="nav-isolation-test"
+              >Isolation Test</a
+            >
           </li>
         </ul>
       </nav>
     </header>
 
-    <main>
+    <main role="main" data-testid="main-content">
       <div class="page-layout">
         <div class="main-content">
-          <div class="isolation-container">
-            <h2>Test Isolation Scenarios</h2>
+          <div
+            class="isolation-container"
+            role="region"
+            aria-labelledby="isolation-heading"
+            data-testid="isolation-container"
+          >
+            <h2 id="isolation-heading">Test Isolation Scenarios</h2>
             <p class="info">
               This page contains various scenarios for practicing test
               isolation. Each test should be independent.
             </p>
 
-            <div class="test-scenarios">
-              <div class="scenario" id="scenario-1">
-                <h3>Scenario 1: Form Submission</h3>
-                <form id="test-form-1" data-testid="test-form-1">
-                  <div class="form-group">
-                    <label for="name-1">Name:</label>
+            <div
+              class="test-scenarios"
+              role="region"
+              aria-label="Test scenarios"
+              data-testid="test-scenarios"
+            >
+              <div
+                class="scenario"
+                id="scenario-1"
+                role="section"
+                aria-labelledby="scenario-1-heading"
+                data-testid="scenario-1"
+              >
+                <h3 id="scenario-1-heading">
+                  <img
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cpath d='M9 9h6M9 13h6M9 17h3'/%3E%3C/svg%3E"
+                    alt="Form icon"
+                    title="Form submission scenario"
+                    width="20"
+                    height="20"
+                  />
+                  Scenario 1: Form Submission
+                </h3>
+                <form
+                  id="test-form-1"
+                  data-testid="test-form-1"
+                  role="form"
+                  aria-label="Test form for scenario 1"
+                  title="Complete this form to test form submission"
+                >
+                  <div class="form-group" role="group">
+                    <label
+                      for="name-1"
+                      data-testid="name-label"
+                      title="Enter your full name"
+                      >Name:</label
+                    >
                     <input
                       type="text"
                       id="name-1"
                       data-testid="name-input"
+                      placeholder="Enter your full name (e.g., John Doe)"
+                      title="Please enter your full name"
+                      aria-describedby="name-help"
                       required
                     />
+                    <small id="name-help" data-testid="name-help"
+                      >Required field</small
+                    >
                   </div>
-                  <div class="form-group">
-                    <label for="email-1">Email:</label>
+                  <div class="form-group" role="group">
+                    <label
+                      for="email-1"
+                      data-testid="email-label"
+                      title="Enter a valid email address"
+                      >Email:</label
+                    >
                     <input
                       type="email"
                       id="email-1"
                       data-testid="email-input"
+                      placeholder="Enter your email address (e.g., john@example.com)"
+                      title="Please enter a valid email address"
+                      aria-describedby="email-help"
                       required
                     />
+                    <small id="email-help" data-testid="email-help"
+                      >Must be a valid email format</small
+                    >
                   </div>
                   <button
                     type="submit"
                     data-testid="submit-button"
                     class="btn btn-primary"
+                    title="Submit the form data"
+                    aria-label="Submit form"
                   >
                     Submit
                   </button>
@@ -65,6 +143,8 @@
                     id="clear-1"
                     data-testid="clear-button"
                     class="btn btn-secondary"
+                    title="Clear all form fields"
+                    aria-label="Clear form"
                   >
                     Clear
                   </button>
@@ -73,28 +153,84 @@
                   id="result-1"
                   data-testid="form-result"
                   class="result-display"
+                  role="status"
+                  aria-live="polite"
+                  aria-label="Form submission result"
+                  title="Results will appear here after form submission"
                 ></div>
               </div>
 
-              <div class="scenario" id="scenario-2">
-                <h3>Scenario 2: Todo List</h3>
-                <div class="todo-container">
-                  <div class="form-group">
+              <div
+                class="scenario"
+                id="scenario-2"
+                role="section"
+                aria-labelledby="scenario-2-heading"
+                data-testid="scenario-2"
+              >
+                <h3 id="scenario-2-heading">
+                  <img
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/svg%3E"
+                    alt="Todo list icon"
+                    title="Todo list management scenario"
+                    width="20"
+                    height="20"
+                  />
+                  Scenario 2: Todo List
+                </h3>
+                <div
+                  class="todo-container"
+                  role="region"
+                  aria-labelledby="scenario-2-heading"
+                  data-testid="todo-container"
+                >
+                  <div
+                    class="form-group"
+                    role="group"
+                    aria-label="Add new todo item"
+                  >
+                    <label
+                      for="todo-input"
+                      class="sr-only"
+                      data-testid="todo-input-label"
+                      >Todo item text</label
+                    >
                     <input
                       type="text"
                       id="todo-input"
                       data-testid="todo-input"
-                      placeholder="Enter a todo item"
+                      placeholder="Enter a todo item (e.g., Buy groceries, Walk the dog)"
+                      title="Type your todo item here and press Enter or click Add"
+                      aria-label="Enter todo item text"
                     />
-                    <button id="add-todo" data-testid="add-todo" class="btn">
+                    <button
+                      id="add-todo"
+                      data-testid="add-todo"
+                      class="btn"
+                      title="Add the todo item to the list"
+                      aria-label="Add todo item"
+                    >
                       Add Todo
                     </button>
                   </div>
-                  <ul id="todo-list" data-testid="todo-list"></ul>
-                  <div class="todo-stats">
-                    <span
+                  <ul
+                    id="todo-list"
+                    data-testid="todo-list"
+                    role="list"
+                    aria-label="Todo items list"
+                    title="List of all todo items"
+                  ></ul>
+                  <div
+                    class="todo-stats"
+                    role="status"
+                    aria-live="polite"
+                    data-testid="todo-stats"
+                  >
+                    <span title="Total number of todo items"
                       >Total:
-                      <span id="todo-count" data-testid="todo-count"
+                      <span
+                        id="todo-count"
+                        data-testid="todo-count"
+                        aria-label="Todo count"
                         >0</span
                       ></span
                     >
@@ -102,6 +238,8 @@
                       id="clear-todos"
                       data-testid="clear-todos"
                       class="btn btn-secondary"
+                      title="Remove all todo items from the list"
+                      aria-label="Clear all todos"
                     >
                       Clear All
                     </button>
@@ -109,63 +247,139 @@
                 </div>
               </div>
 
-              <div class="scenario" id="scenario-3">
-                <h3>Scenario 3: Toggle States</h3>
-                <div class="toggle-container">
-                  <div class="toggle-group">
-                    <label>
+              <div
+                class="scenario"
+                id="scenario-3"
+                role="section"
+                aria-labelledby="scenario-3-heading"
+                data-testid="scenario-3"
+              >
+                <h3 id="scenario-3-heading">
+                  <img
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='6' y='4' width='4' height='16' rx='2'/%3E%3Crect x='14' y='4' width='4' height='16' rx='2'/%3E%3C/svg%3E"
+                    alt="Toggle switches icon"
+                    title="Feature toggle scenario"
+                    width="20"
+                    height="20"
+                  />
+                  Scenario 3: Toggle States
+                </h3>
+                <div
+                  class="toggle-container"
+                  role="region"
+                  aria-labelledby="scenario-3-heading"
+                  data-testid="toggle-container"
+                >
+                  <div
+                    class="toggle-group"
+                    role="group"
+                    aria-labelledby="feature-a-label"
+                    data-testid="toggle-group-a"
+                  >
+                    <label
+                      id="feature-a-label"
+                      data-testid="toggle-1-label"
+                      title="Enable or disable Feature A"
+                    >
                       <input
                         type="checkbox"
                         id="toggle-1"
                         data-testid="toggle-1"
+                        role="switch"
+                        aria-describedby="feature-a-description"
+                        title="Toggle Feature A on/off"
                       />
                       Feature A
                     </label>
+                    <small
+                      id="feature-a-description"
+                      data-testid="feature-a-description"
+                      >Enables advanced functionality</small
+                    >
                     <div
                       id="feature-a"
                       data-testid="feature-a"
                       class="feature-content"
+                      role="region"
+                      aria-labelledby="feature-a-content-heading"
                       style="display: none"
+                      title="Feature A content area"
                     >
-                      <p>Feature A is now enabled!</p>
+                      <h4 id="feature-a-content-heading">
+                        Feature A is now enabled!
+                      </h4>
                       <button
                         data-testid="feature-a-action"
                         class="btn btn-small"
+                        title="Execute Feature A specific action"
+                        aria-label="Execute Feature A action"
                       >
                         Action A
                       </button>
                     </div>
                   </div>
 
-                  <div class="toggle-group">
-                    <label>
+                  <div
+                    class="toggle-group"
+                    role="group"
+                    aria-labelledby="feature-b-label"
+                    data-testid="toggle-group-b"
+                  >
+                    <label
+                      id="feature-b-label"
+                      data-testid="toggle-2-label"
+                      title="Enable or disable Feature B"
+                    >
                       <input
                         type="checkbox"
                         id="toggle-2"
                         data-testid="toggle-2"
+                        role="switch"
+                        aria-describedby="feature-b-description"
+                        title="Toggle Feature B on/off"
                       />
                       Feature B
                     </label>
+                    <small
+                      id="feature-b-description"
+                      data-testid="feature-b-description"
+                      >Enables experimental features</small
+                    >
                     <div
                       id="feature-b"
                       data-testid="feature-b"
                       class="feature-content"
+                      role="region"
+                      aria-labelledby="feature-b-content-heading"
                       style="display: none"
+                      title="Feature B content area"
                     >
-                      <p>Feature B is now enabled!</p>
+                      <h4 id="feature-b-content-heading">
+                        Feature B is now enabled!
+                      </h4>
                       <button
                         data-testid="feature-b-action"
                         class="btn btn-small"
+                        title="Execute Feature B specific action"
+                        aria-label="Execute Feature B action"
                       >
                         Action B
                       </button>
                     </div>
                   </div>
 
-                  <div class="state-display">
-                    <p>
+                  <div
+                    class="state-display"
+                    role="status"
+                    aria-live="polite"
+                    data-testid="state-display"
+                  >
+                    <p title="Shows which features are currently active">
                       Active Features:
-                      <span id="active-features" data-testid="active-features"
+                      <span
+                        id="active-features"
+                        data-testid="active-features"
+                        aria-label="List of active features"
                         >None</span
                       >
                     </p>
@@ -175,23 +389,58 @@
                     id="reset-toggles"
                     data-testid="reset-toggles"
                     class="btn btn-secondary"
+                    title="Reset all feature toggles to their default state"
+                    aria-label="Reset all toggles"
                   >
                     Reset All Toggles
                   </button>
                 </div>
               </div>
 
-              <div class="scenario" id="scenario-4">
-                <h3>Scenario 4: Data Table</h3>
-                <div class="table-container">
-                  <div class="table-controls">
-                    <button id="add-row" data-testid="add-row" class="btn">
+              <div
+                class="scenario"
+                id="scenario-4"
+                role="section"
+                aria-labelledby="scenario-4-heading"
+                data-testid="scenario-4"
+              >
+                <h3 id="scenario-4-heading">
+                  <img
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='3' y='6' width='18' height='15' rx='2'/%3E%3Cpath d='M3 10h18M8 14h1M12 14h1M16 14h1'/%3E%3C/svg%3E"
+                    alt="Data table icon"
+                    title="Data table management scenario"
+                    width="20"
+                    height="20"
+                  />
+                  Scenario 4: Data Table
+                </h3>
+                <div
+                  class="table-container"
+                  role="region"
+                  aria-labelledby="scenario-4-heading"
+                  data-testid="table-container"
+                >
+                  <div
+                    class="table-controls"
+                    role="toolbar"
+                    aria-label="Table control buttons"
+                    data-testid="table-controls"
+                  >
+                    <button
+                      id="add-row"
+                      data-testid="add-row"
+                      class="btn"
+                      title="Add a new row with random data"
+                      aria-label="Add new table row"
+                    >
                       Add Row
                     </button>
                     <button
                       id="sort-name"
                       data-testid="sort-name"
                       class="btn btn-outline"
+                      title="Sort table rows alphabetically by name"
+                      aria-label="Sort by name"
                     >
                       Sort by Name
                     </button>
@@ -199,6 +448,8 @@
                       id="sort-age"
                       data-testid="sort-age"
                       class="btn btn-outline"
+                      title="Sort table rows numerically by age"
+                      aria-label="Sort by age"
                     >
                       Sort by Age
                     </button>
@@ -206,55 +457,144 @@
                       id="clear-table"
                       data-testid="clear-table"
                       class="btn btn-secondary"
+                      title="Remove all rows from the table"
+                      aria-label="Clear all table data"
                     >
                       Clear Table
                     </button>
                   </div>
-                  <table id="data-table" data-testid="data-table">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Actions</th>
+                  <table
+                    id="data-table"
+                    data-testid="data-table"
+                    role="table"
+                    aria-labelledby="scenario-4-heading"
+                    title="Dynamic data table with sortable columns"
+                  >
+                    <thead role="rowgroup">
+                      <tr role="row">
+                        <th
+                          role="columnheader"
+                          title="Unique identifier for each row"
+                          data-testid="header-id"
+                        >
+                          ID
+                        </th>
+                        <th
+                          role="columnheader"
+                          title="Person's name - sortable"
+                          data-testid="header-name"
+                        >
+                          Name
+                        </th>
+                        <th
+                          role="columnheader"
+                          title="Person's age - sortable"
+                          data-testid="header-age"
+                        >
+                          Age
+                        </th>
+                        <th
+                          role="columnheader"
+                          title="Available actions for this row"
+                          data-testid="header-actions"
+                        >
+                          Actions
+                        </th>
                       </tr>
                     </thead>
-                    <tbody id="table-body" data-testid="table-body">
+                    <tbody
+                      id="table-body"
+                      data-testid="table-body"
+                      role="rowgroup"
+                      aria-label="Table data rows"
+                    >
                       <!-- Rows will be added dynamically -->
                     </tbody>
                   </table>
-                  <p>
+                  <p
+                    role="status"
+                    aria-live="polite"
+                    data-testid="row-count-display"
+                    title="Shows the current number of rows in the table"
+                  >
                     Row Count:
-                    <span id="row-count" data-testid="row-count">0</span>
+                    <span
+                      id="row-count"
+                      data-testid="row-count"
+                      aria-label="Number of table rows"
+                      >0</span
+                    >
                   </p>
                 </div>
               </div>
             </div>
 
-            <div class="isolation-tips">
-              <h3>🧪 Test Isolation Tips</h3>
-              <ul>
-                <li>Each test should start with a clean state</li>
-                <li>Tests should not depend on the order of execution</li>
-                <li>Use the reset/clear buttons to restore initial state</li>
-                <li>Avoid sharing data between test scenarios</li>
-                <li>Each scenario should be testable independently</li>
+            <div
+              class="isolation-tips"
+              role="complementary"
+              aria-labelledby="tips-heading"
+              data-testid="isolation-tips"
+            >
+              <h3 id="tips-heading">🧪 Test Isolation Tips</h3>
+              <ul role="list">
+                <li role="listitem">
+                  Each test should start with a clean state
+                </li>
+                <li role="listitem">
+                  Tests should not depend on the order of execution
+                </li>
+                <li role="listitem">
+                  Use the reset/clear buttons to restore initial state
+                </li>
+                <li role="listitem">
+                  Avoid sharing data between test scenarios
+                </li>
+                <li role="listitem">
+                  Each scenario should be testable independently
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
         <!-- Ad Component Sidebar -->
-        <aside class="ad-sidebar">
-          <div id="ad-container" class="ad-container">
-            <div id="ad-placeholder" class="ad-placeholder">
-              <p>🍪 Ads require cookie consent</p>
-              <button id="consent-ads" class="btn btn-small">Allow Ads</button>
+        <aside
+          class="ad-sidebar"
+          role="complementary"
+          aria-label="Advertisement section"
+          data-testid="ad-sidebar"
+        >
+          <div
+            id="ad-container"
+            class="ad-container"
+            data-testid="ad-container"
+          >
+            <div
+              id="ad-placeholder"
+              class="ad-placeholder"
+              data-testid="ad-placeholder"
+            >
+              <p title="Ads are blocked until you provide consent">
+                🍪 Ads require cookie consent
+              </p>
+              <button
+                id="consent-ads"
+                class="btn btn-small"
+                data-testid="consent-ads"
+                title="Click to allow advertisements"
+                aria-label="Allow ads"
+              >
+                Allow Ads
+              </button>
             </div>
             <div
               id="google-ad-slot"
               class="google-ad-slot"
+              data-testid="google-ad-slot"
               style="display: none"
+              role="img"
+              aria-label="Advertisement space"
+              title="Advertisement will be displayed here"
             >
               <!-- Google Ad will load here -->
             </div>
@@ -264,18 +604,61 @@
     </main>
 
     <!-- GDPR Cookie Consent Banner -->
-    <div id="cookie-banner" class="cookie-banner" style="display: none">
+    <div
+      id="cookie-banner"
+      class="cookie-banner"
+      style="display: none"
+      role="dialog"
+      aria-labelledby="cookie-banner-title"
+      aria-describedby="cookie-banner-description"
+      data-testid="cookie-banner"
+    >
       <div class="cookie-content">
-        <p>
+        <h4 id="cookie-banner-title" class="sr-only">Cookie Consent</h4>
+        <p id="cookie-banner-description">
           We use cookies to personalize ads and analyze traffic.
-          <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+          <a
+            href="privacy-policy.html"
+            class="privacy-link"
+            data-testid="privacy-link"
+            title="Read our complete privacy policy"
+            aria-label="Privacy policy link"
+            >Privacy Policy</a
+          >
         </p>
-        <div class="cookie-buttons">
-          <button id="accept-cookies" class="btn btn-primary">
+        <div
+          class="cookie-buttons"
+          role="group"
+          aria-label="Cookie consent options"
+          data-testid="cookie-buttons"
+        >
+          <button
+            id="accept-cookies"
+            class="btn btn-primary"
+            data-testid="accept-cookies"
+            title="Accept all cookies and close banner"
+            aria-label="Accept all cookies"
+          >
             Accept All
           </button>
-          <button id="reject-cookies" class="btn btn-secondary">Reject</button>
-          <button id="manage-cookies" class="btn btn-outline">Manage</button>
+          <button
+            id="reject-cookies"
+            class="btn btn-secondary"
+            data-testid="reject-cookies"
+            title="Reject all non-essential cookies"
+            aria-label="Reject cookies"
+          >
+            Reject
+          </button>
+          <button
+            id="manage-cookies"
+            class="btn btn-outline"
+            data-testid="manage-cookies"
+            title="Customize cookie preferences"
+            aria-label="Manage cookie settings"
+          >
+            Manage
+          </button>
         </div>
       </div>
     </div>
