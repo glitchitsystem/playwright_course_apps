@@ -40,6 +40,22 @@
               >Isolation Test</a
             >
           </li>
+          <li role="none">
+            <a
+              href="form-controls.html"
+              role="menuitem"
+              data-testid="nav-form-controls"
+              >Form Controls</a
+            >
+          </li>
+          <li role="none">
+            <a
+              href="windows-dialogs.html"
+              role="menuitem"
+              data-testid="nav-windows-dialogs"
+              >Windows & Dialogs</a
+            >
+          </li>
         </ul>
       </nav>
     </header>
@@ -691,8 +707,11 @@
           });
 
         // Scenario 2: Todo List
-        let todos = [];
-        let todoId = 1;
+        let todos = [
+          { id: 1, text: "Learn Playwright testing", completed: false },
+          { id: 2, text: "Practice test isolation", completed: false },
+        ];
+        let todoId = 3;
 
         document.getElementById("add-todo").addEventListener("click", addTodo);
         document
@@ -703,6 +722,9 @@
         document
           .getElementById("clear-todos")
           .addEventListener("click", clearTodos);
+
+        // Render initial todos
+        renderTodos();
 
         function addTodo() {
           const input = document.getElementById("todo-input");

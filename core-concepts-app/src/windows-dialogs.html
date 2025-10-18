@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Windows & Dialogs - Playwright Test App</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/windows-dialogs.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Windows & Dialogs Test Page</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context.html">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+          <li><a href="form-controls.html">Form Controls</a></li>
+          <li>
+            <a href="windows-dialogs.html" class="active">Windows & Dialogs</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="page-container">
+        <h2>Windows, Frames, Dialogs & File Operations</h2>
+        <p>Practice testing various browser features with Playwright</p>
+
+        <!-- Windows Section -->
+        <section class="test-section">
+          <h3>🪟 New Windows & Tabs</h3>
+          <div class="button-grid">
+            <button
+              id="open-new-tab"
+              class="btn btn-primary"
+              data-testid="open-new-tab"
+            >
+              Open New Tab
+            </button>
+            <button
+              id="open-new-window"
+              class="btn btn-primary"
+              data-testid="open-new-window"
+            >
+              Open New Window
+            </button>
+            <button
+              id="open-external-link"
+              class="btn btn-secondary"
+              data-testid="open-external-link"
+            >
+              Open External Site
+            </button>
+          </div>
+          <div id="window-info" class="info-panel" data-testid="window-info">
+            <p>No new windows opened yet</p>
+          </div>
+        </section>
+
+        <!-- Frames Section -->
+        <section class="test-section">
+          <h3>🖼️ Frames & iFrames</h3>
+          <div class="frame-container">
+            <div class="frame-demo">
+              <h4>Internal Frame</h4>
+              <iframe
+                id="internal-frame"
+                src="frame-content.html"
+                data-testid="internal-frame"
+                title="Internal Frame Content"
+              ></iframe>
+            </div>
+            <div class="frame-demo">
+              <h4>External Frame</h4>
+              <iframe
+                id="external-frame"
+                src="https://jsonplaceholder.typicode.com/posts/1"
+                data-testid="external-frame"
+                title="External Frame Content"
+              ></iframe>
+            </div>
+          </div>
+          <div id="frame-info" class="info-panel" data-testid="frame-info">
+            <p>Frame interaction results will appear here</p>
+          </div>
+        </section>
+
+        <!-- Dialogs Section -->
+        <section class="test-section">
+          <h3>💬 Browser Dialogs</h3>
+          <div class="button-grid">
+            <button
+              id="alert-dialog"
+              class="btn btn-warning"
+              data-testid="alert-dialog"
+            >
+              Show Alert
+            </button>
+            <button
+              id="confirm-dialog"
+              class="btn btn-warning"
+              data-testid="confirm-dialog"
+            >
+              Show Confirm
+            </button>
+            <button
+              id="prompt-dialog"
+              class="btn btn-warning"
+              data-testid="prompt-dialog"
+            >
+              Show Prompt
+            </button>
+          </div>
+          <div
+            id="dialog-result"
+            class="info-panel"
+            data-testid="dialog-result"
+          >
+            <p>Dialog results will appear here</p>
+          </div>
+
+          <!-- Custom Modal Dialog -->
+          <div class="custom-dialog-section">
+            <h4>Custom Modal Dialog</h4>
+            <button
+              id="open-modal"
+              class="btn btn-info"
+              data-testid="open-modal"
+            >
+              Open Custom Modal
+            </button>
+          </div>
+        </section>
+
+        <!-- File Upload Section -->
+        <section class="test-section">
+          <h3>📁 File Upload</h3>
+          <div class="upload-container">
+            <div class="upload-demo">
+              <h4>Single File Upload</h4>
+              <input
+                type="file"
+                id="single-file"
+                data-testid="single-file-upload"
+                accept=".txt,.pdf,.jpg,.png"
+              />
+              <div
+                class="file-info"
+                id="single-file-info"
+                data-testid="single-file-info"
+              >
+                No file selected
+              </div>
+            </div>
+
+            <div class="upload-demo">
+              <h4>Multiple File Upload</h4>
+              <input
+                type="file"
+                id="multiple-files"
+                data-testid="multiple-file-upload"
+                multiple
+                accept="image/*"
+              />
+              <div
+                class="file-info"
+                id="multiple-files-info"
+                data-testid="multiple-files-info"
+              >
+                No files selected
+              </div>
+            </div>
+
+            <div class="upload-demo">
+              <h4>Drag & Drop Upload</h4>
+              <div id="drop-zone" class="drop-zone" data-testid="drop-zone">
+                <p>Drag and drop files here or click to select</p>
+                <input type="file" id="drop-zone-input" multiple hidden />
+              </div>
+              <div
+                class="file-info"
+                id="drop-zone-info"
+                data-testid="drop-zone-info"
+              >
+                No files dropped
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- File Download Section -->
+        <section class="test-section">
+          <h3>💾 File Download</h3>
+          <div class="download-container">
+            <div class="download-demo">
+              <h4>Direct Downloads</h4>
+              <div class="button-grid">
+                <a
+                  href="data:text/plain;charset=utf-8,Hello%20World!"
+                  download="hello.txt"
+                  class="btn btn-success"
+                  data-testid="download-text-file"
+                >
+                  Download Text File
+                </a>
+                <a
+                  href="data:text/csv;charset=utf-8,Name,Age,City%0AJohn,30,New York%0AJane,25,London"
+                  download="sample.csv"
+                  class="btn btn-success"
+                  data-testid="download-csv-file"
+                >
+                  Download CSV File
+                </a>
+                <button
+                  id="download-json"
+                  class="btn btn-success"
+                  data-testid="download-json-file"
+                >
+                  Download JSON File
+                </button>
+              </div>
+            </div>
+
+            <div class="download-demo">
+              <h4>Generated Downloads</h4>
+              <div class="button-grid">
+                <button
+                  id="generate-report"
+                  class="btn btn-info"
+                  data-testid="generate-report"
+                >
+                  Generate Report
+                </button>
+                <button
+                  id="download-image"
+                  class="btn btn-info"
+                  data-testid="download-image"
+                >
+                  Download Generated Image
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            id="download-status"
+            class="info-panel"
+            data-testid="download-status"
+          >
+            <p>Download status will appear here</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Custom Modal Dialog -->
+    <div
+      id="custom-modal"
+      class="modal-overlay"
+      style="display: none"
+      data-testid="custom-modal"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Custom Modal Dialog</h3>
+          <button
+            id="modal-close"
+            class="modal-close"
+            data-testid="modal-close"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>This is a custom modal dialog for testing purposes.</p>
+          <form id="modal-form">
+            <div class="form-group">
+              <label for="modal-input">Enter some text:</label>
+              <input
+                type="text"
+                id="modal-input"
+                data-testid="modal-input"
+                placeholder="Type something here..."
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            id="modal-save"
+            class="btn btn-primary"
+            data-testid="modal-save"
+          >
+            Save
+          </button>
+          <button
+            id="modal-cancel"
+            class="btn btn-secondary"
+            data-testid="modal-cancel"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 Glitch IT System - Windows & Dialogs Test Page</p>
+    </footer>
+
+    <script src="js/windows-dialogs.js"></script>
+  </body>
+</html>

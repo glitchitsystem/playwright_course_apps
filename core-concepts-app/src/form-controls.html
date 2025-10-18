@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Controls - Playwright Test App</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/form-controls.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Form Controls Test Page</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context.html">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+          <li><a href="form-controls.html" class="active">Form Controls</a></li>
+          <li><a href="windows-dialogs.html">Windows & Dialogs</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="form-container">
+        <h2>Interactive Form Controls</h2>
+        <p>Practice testing various form elements with Playwright</p>
+
+        <form id="test-form" class="test-form">
+          <!-- Date Controls Section -->
+          <section class="form-section">
+            <h3>Date & Time Controls</h3>
+
+            <div class="form-group">
+              <label for="birth-date">Birth Date (Native Date Picker)</label>
+              <input
+                type="date"
+                id="birth-date"
+                name="birthDate"
+                data-testid="birth-date-picker"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="appointment-datetime">Appointment (DateTime)</label>
+              <input
+                type="datetime-local"
+                id="appointment-datetime"
+                name="appointmentDateTime"
+                data-testid="datetime-picker"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="custom-calendar">Custom Calendar</label>
+              <div class="custom-calendar-container">
+                <input
+                  type="text"
+                  id="custom-calendar"
+                  name="customCalendar"
+                  readonly
+                  data-testid="custom-calendar-input"
+                  placeholder="Select a date"
+                />
+                <div
+                  id="calendar-popup"
+                  class="calendar-popup"
+                  style="display: none"
+                  data-testid="calendar-popup"
+                >
+                  <div class="calendar-header">
+                    <button
+                      type="button"
+                      id="prev-month"
+                      data-testid="prev-month"
+                    >
+                      ‹
+                    </button>
+                    <span id="current-month" data-testid="current-month"
+                      >January 2024</span
+                    >
+                    <button
+                      type="button"
+                      id="next-month"
+                      data-testid="next-month"
+                    >
+                      ›
+                    </button>
+                  </div>
+                  <div
+                    class="calendar-grid"
+                    id="calendar-grid"
+                    data-testid="calendar-grid"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Select Dropdowns Section -->
+          <section class="form-section">
+            <h3>Select Dropdowns</h3>
+
+            <div class="form-group">
+              <label for="country-select">Country (Static Select)</label>
+              <select
+                id="country-select"
+                name="country"
+                data-testid="country-select"
+              >
+                <option value="">Choose a country</option>
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="ca">Canada</option>
+                <option value="au">Australia</option>
+                <option value="de">Germany</option>
+                <option value="fr">France</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="city-select">City (Dynamic Select)</label>
+              <select
+                id="city-select"
+                name="city"
+                data-testid="city-select"
+                disabled
+              >
+                <option value="">Select country first</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="custom-dropdown">Skills (Custom Dropdown)</label>
+              <div class="custom-dropdown" data-testid="custom-dropdown">
+                <div
+                  class="dropdown-trigger"
+                  id="skills-trigger"
+                  data-testid="skills-trigger"
+                >
+                  <span id="selected-skills" data-testid="selected-skills"
+                    >Select skills</span
+                  >
+                  <span class="dropdown-arrow">▼</span>
+                </div>
+                <div
+                  class="dropdown-menu"
+                  id="skills-menu"
+                  data-testid="skills-menu"
+                  style="display: none"
+                >
+                  <div
+                    class="dropdown-option"
+                    data-value="javascript"
+                    data-testid="skill-javascript"
+                  >
+                    JavaScript
+                  </div>
+                  <div
+                    class="dropdown-option"
+                    data-value="python"
+                    data-testid="skill-python"
+                  >
+                    Python
+                  </div>
+                  <div
+                    class="dropdown-option"
+                    data-value="java"
+                    data-testid="skill-java"
+                  >
+                    Java
+                  </div>
+                  <div
+                    class="dropdown-option"
+                    data-value="csharp"
+                    data-testid="skill-csharp"
+                  >
+                    C#
+                  </div>
+                  <div
+                    class="dropdown-option"
+                    data-value="react"
+                    data-testid="skill-react"
+                  >
+                    React
+                  </div>
+                  <div
+                    class="dropdown-option"
+                    data-value="angular"
+                    data-testid="skill-angular"
+                  >
+                    Angular
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Radio Buttons Section -->
+          <section class="form-section">
+            <h3>Radio Buttons</h3>
+
+            <fieldset class="form-group">
+              <legend>Experience Level</legend>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name="experience"
+                    value="beginner"
+                    data-testid="experience-beginner"
+                  />
+                  <span class="radio-custom"></span>
+                  Beginner (0-1 years)
+                </label>
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name="experience"
+                    value="intermediate"
+                    data-testid="experience-intermediate"
+                  />
+                  <span class="radio-custom"></span>
+                  Intermediate (2-5 years)
+                </label>
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name="experience"
+                    value="advanced"
+                    data-testid="experience-advanced"
+                  />
+                  <span class="radio-custom"></span>
+                  Advanced (5+ years)
+                </label>
+              </div>
+            </fieldset>
+          </section>
+
+          <!-- Checkboxes Section -->
+          <section class="form-section">
+            <h3>Checkboxes</h3>
+
+            <fieldset class="form-group">
+              <legend>Interests</legend>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="interests"
+                    value="frontend"
+                    data-testid="interest-frontend"
+                  />
+                  <span class="checkbox-custom"></span>
+                  Frontend Development
+                </label>
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="interests"
+                    value="backend"
+                    data-testid="interest-backend"
+                  />
+                  <span class="checkbox-custom"></span>
+                  Backend Development
+                </label>
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="interests"
+                    value="mobile"
+                    data-testid="interest-mobile"
+                  />
+                  <span class="checkbox-custom"></span>
+                  Mobile Development
+                </label>
+                <label class="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="interests"
+                    value="testing"
+                    data-testid="interest-testing"
+                  />
+                  <span class="checkbox-custom"></span>
+                  Testing & QA
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="terms-checkbox"
+                  name="terms"
+                  data-testid="terms-checkbox"
+                  required
+                />
+                <span class="checkbox-custom"></span>
+                I agree to the terms and conditions
+              </label>
+            </div>
+          </section>
+
+          <!-- Autosuggest Section -->
+          <section class="form-section">
+            <h3>Autosuggest Dropdown</h3>
+
+            <div class="form-group">
+              <label for="technology-search">Technology Search</label>
+              <div class="autosuggest-container">
+                <input
+                  type="text"
+                  id="technology-search"
+                  name="technology"
+                  data-testid="technology-search"
+                  placeholder="Type to search technologies..."
+                  autocomplete="off"
+                />
+                <div
+                  id="suggestions-list"
+                  class="suggestions-list"
+                  data-testid="suggestions-list"
+                  style="display: none"
+                ></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="location-search">Location Autosuggest</label>
+              <div class="autosuggest-container">
+                <input
+                  type="text"
+                  id="location-search"
+                  name="location"
+                  data-testid="location-search"
+                  placeholder="Type city name..."
+                  autocomplete="off"
+                />
+                <div
+                  id="location-suggestions"
+                  class="suggestions-list"
+                  data-testid="location-suggestions"
+                  style="display: none"
+                ></div>
+              </div>
+            </div>
+          </section>
+        </form>
+
+        <!-- Form Results -->
+        <div
+          id="form-results"
+          class="form-results"
+          data-testid="form-results"
+          style="display: none"
+        >
+          <h3>Form Submission Results</h3>
+          <pre id="results-content" data-testid="results-content"></pre>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Glitch IT System - Form Controls Test Page</p>
+    </footer>
+
+    <script src="js/form-controls.js"></script>
+  </body>
+</html>

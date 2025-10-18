@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frame Content</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 1rem;
+        margin: 0;
+        background: #f8f9fa;
+      }
+      .frame-content {
+        background: white;
+        padding: 1rem;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+      }
+      .frame-button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 0.5rem 0;
+      }
+      .frame-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin: 0.5rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame-content">
+      <h3>Inside Frame Content</h3>
+      <p>This content is loaded inside an iframe.</p>
+
+      <div>
+        <label for="frame-text-input">Frame Input:</label>
+        <input
+          type="text"
+          id="frame-text-input"
+          class="frame-input"
+          data-testid="frame-text-input"
+          placeholder="Type in frame..."
+        />
+      </div>
+
+      <button id="frame-button" class="frame-button" data-testid="frame-button">
+        Click Me (Inside Frame)
+      </button>
+
+      <div id="frame-output" data-testid="frame-output">
+        Frame interaction results will appear here
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("frame-button")
+        .addEventListener("click", function () {
+          const input = document.getElementById("frame-text-input");
+          const output = document.getElementById("frame-output");
+          output.innerHTML = `<p>Button clicked! Input value: "${input.value}"</p>`;
+
+          // Send message to parent window
+          window.parent.postMessage(
+            {
+              type: "frame-interaction",
+              data: input.value,
+              timestamp: new Date().toISOString(),
+            },
+            "*"
+          );
+        });
+
+      document
+        .getElementById("frame-text-input")
+        .addEventListener("input", function (e) {
+          window.parent.postMessage(
+            {
+              type: "frame-input-change",
+              data: e.target.value,
+              timestamp: new Date().toISOString(),
+            },
+            "*"
+          );
+        });
+    </script>
+  </body>
+</html>
