@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeouts & Waiting - Playwright Test App</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Timeouts & Waiting Strategies</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context.html">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+          <li><a href="form-controls.html">Form Controls</a></li>
+          <li><a href="windows-dialogs.html">Windows & Dialogs</a></li>
+          <li>
+            <a href="timeouts-waiting.html" class="active"
+              >Timeouts & Waiting</a
+            >
+          </li>
+          <li><a href="auth.html">Auth Demo</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="page-layout">
+        <div class="main-content">
+          <section class="demo-sections">
+            <h2>Timeouts & Waiting in Playwright</h2>
+            <p>
+              Learn and test strategies for handling timeouts, auto-waiting, and
+              dynamic waits in Playwright.
+            </p>
+
+            <div class="concept-cards">
+              <div class="card">
+                <h3>Global, Action & Expect Timeouts</h3>
+                <label for="timeout-input">Set timeout (ms):</label>
+                <input
+                  type="number"
+                  id="timeout-input"
+                  value="1000"
+                  min="100"
+                  max="10000"
+                  style="width: 120px"
+                />
+                <button id="timeout-btn" class="btn">
+                  Start Timeout Action
+                </button>
+                <div id="timeout-result" style="margin-top: 1em"></div>
+              </div>
+              <div class="card">
+                <h3>Auto-waiting Demo</h3>
+                <button id="show-delayed" class="btn">
+                  Show Delayed Element
+                </button>
+                <div
+                  id="delayed-element"
+                  style="display: none; margin-top: 1em"
+                  data-testid="delayed-element"
+                >
+                  <span>✅ Element appeared after delay!</span>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Dynamic Content (waitFor*)</h3>
+                <button id="load-dynamic" class="btn">
+                  Load Dynamic Content
+                </button>
+                <div id="dynamic-content" style="margin-top: 1em"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="demo-sections" style="margin-top:2em;">
+            <h2>Auto-waiting Actionability Methods</h2>
+            <div class="concept-cards">
+              <div class="card">
+                <h3>Visible</h3>
+                <button id="show-visible" class="btn">Show Element</button>
+                <div id="visible-element" style="display:none;margin-top:1em;" data-testid="visible-element">
+                  <span>I am now visible!</span>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Enabled</h3>
+                <button id="toggle-enabled" class="btn">Enable Input</button>
+                <input id="enabled-input" type="text" disabled style="margin-top:1em;width:180px;" placeholder="Type here..." data-testid="enabled-input" />
+              </div>
+              <div class="card">
+                <h3>Stable</h3>
+                <button id="move-stable" class="btn">Move Element</button>
+                <div id="stable-element" style="margin-top:1em;position:relative;left:0;transition:left 0.5s;display:inline-block;background:#e3f2fd;padding:0.5em 1em;border-radius:4px;" data-testid="stable-element">
+                  I will move, then stabilize
+                </div>
+              </div>
+              <div class="card">
+                <h3>Editable</h3>
+                <button id="make-editable" class="btn">Make Editable</button>
+                <input id="editable-input" type="text" readonly style="margin-top:1em;width:180px;" placeholder="Can't edit yet" data-testid="editable-input" />
+              </div>
+              <div class="card">
+                <h3>Attached</h3>
+                <button id="attach-element" class="btn">Attach Element</button>
+                <div id="attached-container" style="margin-top:1em;"></div>
+              </div>
+            </div>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none">
+      <div class="cookie-content">
+        <p>
+          We use cookies to personalize ads and analyze traffic.
+          <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+        </p>
+        <div class="cookie-buttons">
+                </div>
+                <!-- Ad Component Sidebar -->
+                <aside class="ad-sidebar">
+                    <!-- Ad Component Sidebar -->
+                    <aside class="ad-sidebar">
+                      <div id="ad-container" class="ad-container">
+                        <div id="ad-placeholder" class="ad-placeholder">
+                          <p>Ad placeholder - consent required</p>
+                          <button id="consent-ads" class="btn btn-primary">
+                            Allow Ads
+                          </button>
+                        </div>
+                        <div id="ad-status" style="display: none"></div>
+                      </div>
+                    </aside>
+                  <div id="ad-container" class="ad-container">
+                    <div id="ad-placeholder" class="ad-placeholder">
+                      <p>Ad placeholder - consent required</p>
+                      <button id="consent-ads" class="btn btn-primary">
+                        Allow Ads
+                      </button>
+                    </div>
+                    <div id="ad-status" style="display: none"></div>
+                  </div>
+                </aside>
+
+    <footer>
+      <p>
+        &copy; 2024 Glitch IT System - Core Concepts Practice App |
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </p>
+    </footer>
+    <script src="js/ad-component.js"></script>
+    <script src="js/timeouts-waiting.js"></script>
+  </body>
+</html>

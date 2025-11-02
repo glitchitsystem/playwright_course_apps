@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth Demo - Playwright Test App</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Auth Demo</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context.html">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+          <li><a href="form-controls.html">Form Controls</a></li>
+          <li><a href="windows-dialogs.html">Windows & Dialogs</a></li>
+          <li><a href="timeouts-waiting.html">Timeouts & Waiting</a></li>
+          <li><a href="auth.html" class="active">Auth Demo</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="page-container">
+        <div
+          id="auth-demo"
+          class="auth-demo"
+          style="max-width: 400px; margin: 2rem auto"
+        >
+          <div id="login-section">
+            <h2>Login Demo</h2>
+            <form id="login-form" autocomplete="off">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  data-testid="auth-username"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  data-testid="auth-password"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-testid="auth-login"
+              >
+                Login
+              </button>
+              <div
+                id="auth-error"
+                style="color: #e74c3c; margin-top: 1em; display: none"
+                data-testid="auth-error"
+              ></div>
+            </form>
+          </div>
+          <div id="logged-in-section" style="display: none">
+            <h2>Welcome!</h2>
+            <p id="logged-in-user" style="font-weight: bold"></p>
+            <button
+              id="logout-btn"
+              class="btn btn-secondary"
+              data-testid="auth-logout"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>&copy; 2024 Glitch IT System - Auth Demo Page</p>
+    </footer>
+    <script>
+      // Simple localStorage-based auth demo
+      function showLoggedInState(username) {
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("logged-in-section").style.display = "";
+        document.getElementById("logged-in-user").textContent = username;
+      }
+      function showLoggedOutState() {
+        document.getElementById("login-section").style.display = "";
+        document.getElementById("logged-in-section").style.display = "none";
+        document.getElementById("logged-in-user").textContent = "";
+        document.getElementById("auth-error").style.display = "none";
+      }
+      function checkAuth() {
+        const username = localStorage.getItem("auth-username");
+        if (username) {
+          showLoggedInState(username);
+        } else {
+          showLoggedOutState();
+        }
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        checkAuth();
+        const loginForm = document.getElementById("login-form");
+        if (loginForm) {
+          loginForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            const errorDiv = document.getElementById("auth-error");
+            if (username && password) {
+              // Only allow login if username is 'user' and password is 'password'
+              if (username === "user" && password === "password") {
+                localStorage.setItem("auth-username", username);
+                errorDiv.style.display = "none";
+                showLoggedInState(username);
+              } else {
+                errorDiv.textContent = "Invalid username or password.";
+                errorDiv.style.display = "";
+              }
+            } else {
+              errorDiv.textContent = "Please enter username and password.";
+              errorDiv.style.display = "";
+            }
+          });
+        }
+        const logoutBtn = document.getElementById("logout-btn");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", function () {
+            localStorage.removeItem("auth-username");
+            showLoggedOutState();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
