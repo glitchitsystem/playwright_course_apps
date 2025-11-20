@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Locale & Timezone Demo - Playwright Test App</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Locale & Timezone Demo</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="context.html">Context</a></li>
+          <li><a href="shared-state.html">Shared State</a></li>
+          <li><a href="isolation-test.html">Isolation Test</a></li>
+          <li><a href="form-controls.html">Form Controls</a></li>
+          <li><a href="windows-dialogs.html">Windows & Dialogs</a></li>
+          <li><a href="timeouts-waiting.html">Timeouts & Waiting</a></li>
+          <li><a href="auth.html">Auth Demo</a></li>
+          <li>
+            <a href="locale-timezone.html" class="active">Locale & Timezone</a>
+          </li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="page-container" style="max-width: 500px; margin: 2rem auto">
+        <h2>Your Locale & Timezone</h2>
+        <div id="locale-info" style="margin-bottom: 2em"></div>
+      </div>
+    </main>
+    <footer>
+      <p>&copy; 2024 Glitch IT System - Locale & Timezone Demo</p>
+    </footer>
+    <script>
+      // Show user's locale and timezone
+      const localeInfo = document.getElementById("locale-info");
+      const locale = navigator.language || "unknown";
+      const timezone =
+        Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown";
+      localeInfo.innerHTML = `<strong>Locale:</strong> ${locale}<br><strong>Timezone:</strong> ${timezone}`;
+    </script>
+  </body>
+</html>
