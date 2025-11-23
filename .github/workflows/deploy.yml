@@ -6,66 +6,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build site
-        run: npm run build
-
-      - name: Set build timestamp
-        run: echo "BUILD_TIMESTAMP=$(date +'%Y%m%d_%H%M%S')" >> $GITHUB_ENV
-
-      - name: Create version.txt
-        run: echo ${{ env.BUILD_TIMESTAMP }} > ./out/version.txt
-
-      - name: Deploy to FTP (Learn Subdomain)
+      - name: Deploy src to Learn Subdomain
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/
-          server-dir: /learn.glitchitsystem.com/public_html/
+          local-dir: ./src/
+          server-dir: /learn.glitchitsystem.com/public_html/core-concepts/
           protocol: ftp
           log-level: standard
-          dangerous-clean-slate: true # This will remove old files
+          dangerous-clean-slate: true
           timeout: 30000
-          port: 21 # Specify default FTP port explicitly
+          port: 21
 
-  deploy-main-site:
-    runs-on: ubuntu-latest
-    needs: build-and-deploy
-    environment: production
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        run: |
-          # Re-build or download artifacts from previous job
-          npm ci
-          npm run build
-
-      - name: Deploy to FTP (Core Concepts)
+      - name: Deploy src to Main Site
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/
+          local-dir: ./src/
           server-dir: /glitchitsystem.com/public_html/core-concepts/
           protocol: ftp
           log-level: standard
-          dangerous-clean-slate: true # This will remove old files
+          dangerous-clean-slate: true
           timeout: 30000
-          port: 21 # Specify default FTP port explicitly
+          port: 21
