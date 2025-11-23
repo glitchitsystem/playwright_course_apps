@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "copyfiles -u 1 src/**/* out"
   },
   "keywords": [
     "playwright",
@@ -18,6 +19,9 @@
   "dependencies": {
     "express": "^4.18.2",
     "open": "^8.4.0"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
   },
   "engines": {
     "node": ">=14.0.0"
